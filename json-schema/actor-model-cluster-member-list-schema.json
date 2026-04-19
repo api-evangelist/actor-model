@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://schema.api-evangelist.com/actor-model/actor-model-clustermemberlist-schema.json",
+  "title": "ClusterMemberList",
+  "description": "List of cluster members",
+  "type": "object",
+  "properties": {
+    "members": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ClusterMember"
+      }
+    },
+    "leader": {
+      "type": "string",
+      "description": "Current cluster leader node ID",
+      "example": "akka://system@10.0.0.1:2551"
+    },
+    "totalActors": {
+      "type": "integer",
+      "description": "Total actors across all cluster members",
+      "example": 5000
+    }
+  }
+}

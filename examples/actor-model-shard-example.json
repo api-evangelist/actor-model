@@ -1,0 +1,7 @@
+{
+  "shardId": "shard-42",
+  "region": "UserRegion",
+  "nodeId": "akka://system@10.0.0.2:2551",
+  "entityCount": 150,
+  "status": "active"
+}

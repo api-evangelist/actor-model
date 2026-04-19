@@ -1,0 +1,9 @@
+{
+  "status": "healthy",
+  "activeActors": 5000,
+  "messagesPerSecond": 12500.5,
+  "errorRate": 0.0001,
+  "deadLetters": 3,
+  "clusterSize": 5,
+  "uptime": 86400
+}

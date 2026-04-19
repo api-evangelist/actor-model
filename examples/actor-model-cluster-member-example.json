@@ -1,0 +1,11 @@
+{
+  "nodeId": "akka://system@10.0.0.1:2551",
+  "address": "10.0.0.1:2551",
+  "status": "up",
+  "roles": [
+    "worker",
+    "seed"
+  ],
+  "upSince": "2026-04-19T10:00:00Z",
+  "actorCount": 1200
+}

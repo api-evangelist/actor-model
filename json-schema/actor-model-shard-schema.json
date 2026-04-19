@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://schema.api-evangelist.com/actor-model/actor-model-shard-schema.json",
+  "title": "Shard",
+  "description": "A shard partition in the cluster",
+  "type": "object",
+  "properties": {
+    "shardId": {
+      "type": "string",
+      "description": "Shard identifier",
+      "example": "shard-42"
+    },
+    "region": {
+      "type": "string",
+      "description": "Shard region name",
+      "example": "UserRegion"
+    },
+    "nodeId": {
+      "type": "string",
+      "description": "Node hosting this shard",
+      "example": "akka://system@10.0.0.2:2551"
+    },
+    "entityCount": {
+      "type": "integer",
+      "description": "Number of entities in this shard",
+      "example": 150
+    },
+    "status": {
+      "type": "string",
+      "description": "Shard status",
+      "example": "active"
+    }
+  }
+}

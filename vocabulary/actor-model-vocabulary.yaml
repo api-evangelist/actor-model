@@ -1,0 +1,214 @@
+vocabulary: "1.0.0"
+
+info:
+  provider: "Actor Model"
+  description: "Unified taxonomy mapping operational (OpenAPI) and capability (Naftiko) dimensions for the Actor Model concurrency paradigm — covering actor lifecycle, message passing, supervision, and cluster management."
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+operational:
+  apis:
+    - name: Actor Model API
+      namespace: actor-model
+      version: "1.0.0"
+      baseUrl: "https://api.example.com/actor-system/v1"
+      status: active
+
+  resources:
+    - name: actor
+      api: actor-model
+      description: "An independent unit of computation that processes messages asynchronously"
+      actions: [list, get, spawn, stop]
+    - name: mailbox
+      api: actor-model
+      description: "Message queue for an actor holding pending messages"
+      actions: [send, inspect]
+    - name: supervisor
+      api: actor-model
+      description: "An actor responsible for monitoring and restarting child actors"
+      actions: [list, get, list-children]
+    - name: cluster-member
+      api: actor-model
+      description: "A node participating in the distributed actor system cluster"
+      actions: [list]
+    - name: shard
+      api: actor-model
+      description: "A partition of entities in a sharded cluster"
+      actions: [list]
+    - name: system-health
+      api: actor-model
+      description: "Overall health metrics for the actor system"
+      actions: [get]
+
+  actions:
+    - name: list
+      httpMethod: GET
+      pattern: read
+      description: "Retrieve a paginated list of resources"
+    - name: get
+      httpMethod: GET
+      pattern: read
+      description: "Retrieve a single resource by identifier"
+    - name: spawn
+      httpMethod: POST
+      pattern: create
+      description: "Create and start a new actor"
+    - name: stop
+      httpMethod: DELETE
+      pattern: delete
+      description: "Send stop signal to an actor"
+    - name: send
+      httpMethod: POST
+      pattern: create
+      description: "Send a message to an actor's mailbox"
+    - name: inspect
+      httpMethod: GET
+      pattern: read
+      description: "Inspect mailbox contents without consuming messages"
+    - name: list-children
+      httpMethod: GET
+      pattern: read
+      description: "List child actors under a supervisor"
+
+  schemas:
+    core:
+      - name: Actor
+        properties: [id, path, behavior, status, mailboxSize, supervisorId, spawnedAt, messageCount, restartCount]
+        description: "An actor in the system"
+      - name: ActorMessage
+        properties: [type, payload, replyTo, correlationId, priority]
+        description: "A message placed in an actor's mailbox"
+      - name: MailboxInspection
+        properties: [actorId, pendingCount, messages, oldestMessageAge]
+        description: "Mailbox inspection result"
+      - name: Supervisor
+        properties: [id, path, strategy, maxRestarts, restartWindow, childCount, status]
+        description: "A supervisor actor"
+    cluster:
+      - name: ClusterMember
+        properties: [nodeId, address, status, roles, upSince, actorCount]
+        description: "A node in the cluster"
+      - name: Shard
+        properties: [shardId, region, nodeId, entityCount, status]
+        description: "A cluster shard"
+      - name: SystemHealth
+        properties: [status, activeActors, messagesPerSecond, errorRate, deadLetters, clusterSize, uptime]
+        description: "System health metrics"
+
+  parameters:
+    identifiers:
+      - name: actorId
+        type: string
+        description: "Unique actor identifier or hierarchical path"
+      - name: supervisorId
+        type: string
+        description: "Supervisor actor identifier"
+    filters:
+      - name: status
+        type: string
+        description: "Filter actors or members by status"
+      - name: limit
+        type: integer
+        description: "Maximum number of results per page"
+      - name: cursor
+        type: string
+        description: "Pagination cursor for seek-based pagination"
+
+  enums:
+    actor-status:
+      - active
+      - idle
+      - stopping
+      - stopped
+    supervision-strategies:
+      - one-for-one
+      - one-for-all
+      - rest-for-one
+      - all-for-one
+    message-priority:
+      - high
+      - normal
+      - low
+    cluster-status:
+      - up
+      - joining
+      - leaving
+      - down
+      - removed
+
+  authentication:
+    schemes:
+      - name: BearerAuth
+        type: http
+        scheme: bearer
+        description: "Bearer token for actor system management API access"
+        apis: [actor-model]
+
+capability:
+  workflows:
+    - name: Actor System Management
+      file: capabilities/actor-system-management.yaml
+      description: "Manage actor lifecycle, message passing, supervision hierarchies, and cluster operations"
+      apis: [actor-model]
+      tools: 7
+      personas: [Platform Engineer, Distributed Systems Developer, Site Reliability Engineer]
+      domains: [Concurrency, Distributed Systems]
+
+  personas:
+    - id: platform-engineer
+      name: Platform Engineer
+      description: "Builds and operates distributed platforms using actor model frameworks like Akka or Orleans"
+      workflows: [Actor System Management]
+    - id: distributed-systems-developer
+      name: Distributed Systems Developer
+      description: "Designs concurrent, fault-tolerant systems using actor model patterns"
+      workflows: [Actor System Management]
+    - id: site-reliability-engineer
+      name: Site Reliability Engineer
+      description: "Monitors actor system health, throughput, and failure recovery"
+      workflows: [Actor System Management]
+
+  domains:
+    - name: Concurrency
+      description: "Concurrent computation using actors, message passing, and isolation"
+      resources: [actor, mailbox, supervisor]
+    - name: Distributed Systems
+      description: "Distributed cluster management, sharding, and fault tolerance"
+      resources: [cluster-member, shard, system-health]
+
+  namespaces:
+    - name: actor-model
+      type: consumed
+    - name: actor-system-api
+      type: rest-exposed
+      port: 8080
+    - name: actor-system-mcp
+      type: mcp-exposed
+      port: 9090
+
+  binds:
+    - name: ACTOR_SYSTEM_API_TOKEN
+      description: "Bearer token for actor system management API"
+      workflows: [Actor System Management]
+
+crossReference:
+  - resource: actor
+    operations: [list-actors, get-actor, spawn-actor, stop-actor]
+    workflows: [Actor System Management]
+    personas: [Platform Engineer, Distributed Systems Developer]
+  - resource: mailbox
+    operations: [send-message, inspect-mailbox]
+    workflows: [Actor System Management]
+    personas: [Distributed Systems Developer, Site Reliability Engineer]
+  - resource: supervisor
+    operations: [list-supervisors, get-supervisor, list-children]
+    workflows: [Actor System Management]
+    personas: [Distributed Systems Developer, Site Reliability Engineer]
+  - resource: cluster-member
+    operations: [list-cluster-members]
+    workflows: [Actor System Management]
+    personas: [Platform Engineer, Site Reliability Engineer]
+  - resource: system-health
+    operations: [get-health]
+    workflows: [Actor System Management]
+    personas: [Site Reliability Engineer]

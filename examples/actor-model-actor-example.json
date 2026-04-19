@@ -1,0 +1,12 @@
+{
+  "id": "user-123",
+  "path": "/user/supervisor/worker-1",
+  "behavior": "UserSessionBehavior",
+  "status": "active",
+  "mailboxSize": 3,
+  "supervisorId": "supervisor-pool-1",
+  "spawnedAt": "2026-04-19T10:00:00Z",
+  "lastMessageAt": "2026-04-19T10:00:00Z",
+  "messageCount": 1024,
+  "restartCount": 0
+}

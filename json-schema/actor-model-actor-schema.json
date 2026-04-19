@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://schema.api-evangelist.com/actor-model/actor-model-actor-schema.json",
+  "title": "Actor",
+  "description": "An actor in the system with its current state and mailbox info",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique actor identifier",
+      "example": "user-123"
+    },
+    "path": {
+      "type": "string",
+      "description": "Hierarchical actor path",
+      "example": "/user/supervisor/worker-1"
+    },
+    "behavior": {
+      "type": "string",
+      "description": "Current behavior class or name",
+      "example": "UserSessionBehavior"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "idle",
+        "stopping",
+        "stopped"
+      ],
+      "description": "Current actor status",
+      "example": "active"
+    },
+    "mailboxSize": {
+      "type": "integer",
+      "description": "Number of pending messages in mailbox",
+      "example": 3
+    },
+    "supervisorId": {
+      "type": "string",
+      "description": "Parent supervisor actor ID",
+      "example": "supervisor-pool-1"
+    },
+    "spawnedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the actor was spawned"
+    },
+    "lastMessageAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of last processed message"
+    },
+    "messageCount": {
+      "type": "integer",
+      "description": "Total messages processed since spawn",
+      "example": 1024
+    },
+    "restartCount": {
+      "type": "integer",
+      "description": "Number of times this actor has been restarted",
+      "example": 0
+    }
+  }
+}

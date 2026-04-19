@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://structure.api-evangelist.com/actor-model/actor-model-mailbox-inspection-structure.json",
+  "title": "MailboxInspection",
+  "description": "Inspection of pending messages in an actor's mailbox",
+  "type": "object",
+  "properties": {
+    "actorId": {
+      "type": "string"
+    },
+    "pendingCount": {
+      "type": "integer"
+    },
+    "messages": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "oldestMessageAge": {
+      "type": "integer"
+    }
+  }
+}

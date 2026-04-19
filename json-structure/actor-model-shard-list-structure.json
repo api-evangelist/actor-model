@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://structure.api-evangelist.com/actor-model/actor-model-shard-list-structure.json",
+  "title": "ShardList",
+  "description": "List of cluster shards",
+  "type": "object",
+  "properties": {
+    "shards": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "totalShards": {
+      "type": "integer"
+    },
+    "totalEntities": {
+      "type": "integer"
+    }
+  }
+}

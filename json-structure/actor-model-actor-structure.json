@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://structure.api-evangelist.com/actor-model/actor-model-actor-structure.json",
+  "title": "Actor",
+  "description": "An actor in the system with its current state and mailbox info",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "path": {
+      "type": "string"
+    },
+    "behavior": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "mailboxSize": {
+      "type": "integer"
+    },
+    "supervisorId": {
+      "type": "string"
+    },
+    "spawnedAt": {
+      "type": "string"
+    },
+    "lastMessageAt": {
+      "type": "string"
+    },
+    "messageCount": {
+      "type": "integer"
+    },
+    "restartCount": {
+      "type": "integer"
+    }
+  }
+}

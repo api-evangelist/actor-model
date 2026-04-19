@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://structure.api-evangelist.com/actor-model/actor-model-supervisor-list-structure.json",
+  "title": "SupervisorList",
+  "description": "Paginated list of supervisors",
+  "type": "object",
+  "properties": {
+    "supervisors": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "total": {
+      "type": "integer"
+    },
+    "cursor": {
+      "type": "string"
+    }
+  }
+}

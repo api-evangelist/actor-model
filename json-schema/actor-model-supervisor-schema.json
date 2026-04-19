@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://schema.api-evangelist.com/actor-model/actor-model-supervisor-schema.json",
+  "title": "Supervisor",
+  "description": "A supervisor actor managing a set of child actors",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Supervisor actor ID",
+      "example": "session-supervisor"
+    },
+    "path": {
+      "type": "string",
+      "description": "Actor path",
+      "example": "/system/supervisor/session-supervisor"
+    },
+    "strategy": {
+      "type": "string",
+      "enum": [
+        "one-for-one",
+        "one-for-all",
+        "rest-for-one",
+        "all-for-one"
+      ],
+      "description": "Supervision strategy",
+      "example": "one-for-one"
+    },
+    "maxRestarts": {
+      "type": "integer",
+      "description": "Maximum restart attempts within window",
+      "example": 10
+    },
+    "restartWindow": {
+      "type": "integer",
+      "description": "Restart window in seconds",
+      "example": 60
+    },
+    "childCount": {
+      "type": "integer",
+      "description": "Current number of supervised children",
+      "example": 42
+    },
+    "status": {
+      "type": "string",
+      "description": "Supervisor status",
+      "example": "active"
+    }
+  }
+}

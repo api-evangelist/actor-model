@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://schema.api-evangelist.com/actor-model/actor-model-actorlist-schema.json",
+  "title": "ActorList",
+  "description": "Paginated list of actors",
+  "type": "object",
+  "properties": {
+    "actors": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Actor"
+      }
+    },
+    "total": {
+      "type": "integer",
+      "description": "Total actor count",
+      "example": 500
+    },
+    "cursor": {
+      "type": "string",
+      "description": "Cursor for next page",
+      "example": "eyJwYWdlIjoxfQ=="
+    }
+  }
+}

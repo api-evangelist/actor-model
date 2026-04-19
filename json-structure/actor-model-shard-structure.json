@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://structure.api-evangelist.com/actor-model/actor-model-shard-structure.json",
+  "title": "Shard",
+  "description": "A shard partition in the cluster",
+  "type": "object",
+  "properties": {
+    "shardId": {
+      "type": "string"
+    },
+    "region": {
+      "type": "string"
+    },
+    "nodeId": {
+      "type": "string"
+    },
+    "entityCount": {
+      "type": "integer"
+    },
+    "status": {
+      "type": "string"
+    }
+  }
+}

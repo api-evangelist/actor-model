@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://structure.api-evangelist.com/actor-model/actor-model-actor-message-structure.json",
+  "title": "ActorMessage",
+  "description": "A message to be placed in an actor's mailbox",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string"
+    },
+    "payload": {
+      "type": "object"
+    },
+    "replyTo": {
+      "type": "string"
+    },
+    "correlationId": {
+      "type": "string"
+    },
+    "priority": {
+      "type": "string"
+    }
+  }
+}

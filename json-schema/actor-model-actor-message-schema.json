@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://schema.api-evangelist.com/actor-model/actor-model-actormessage-schema.json",
+  "title": "ActorMessage",
+  "description": "A message to be placed in an actor's mailbox",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "Message type discriminator",
+      "example": "UpdateProfile"
+    },
+    "payload": {
+      "type": "object",
+      "description": "Message payload",
+      "additionalProperties": true
+    },
+    "replyTo": {
+      "type": "string",
+      "description": "Actor ID to send reply to (optional)",
+      "example": "caller-actor-456"
+    },
+    "correlationId": {
+      "type": "string",
+      "description": "Correlation ID for tracing",
+      "example": "trace-xyz-789"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "high",
+        "normal",
+        "low"
+      ],
+      "description": "Message priority in mailbox",
+      "example": "normal"
+    }
+  }
+}

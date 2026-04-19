@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://schema.api-evangelist.com/actor-model/actor-model-shardlist-schema.json",
+  "title": "ShardList",
+  "description": "List of cluster shards",
+  "type": "object",
+  "properties": {
+    "shards": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Shard"
+      }
+    },
+    "totalShards": {
+      "type": "integer",
+      "description": "Total shard count",
+      "example": 100
+    },
+    "totalEntities": {
+      "type": "integer",
+      "description": "Total entities across all shards",
+      "example": 15000
+    }
+  }
+}

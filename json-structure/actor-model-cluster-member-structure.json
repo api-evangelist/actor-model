@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://structure.api-evangelist.com/actor-model/actor-model-cluster-member-structure.json",
+  "title": "ClusterMember",
+  "description": "A node in the actor system cluster",
+  "type": "object",
+  "properties": {
+    "nodeId": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "upSince": {
+      "type": "string"
+    },
+    "actorCount": {
+      "type": "integer"
+    }
+  }
+}

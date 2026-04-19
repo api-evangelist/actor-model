@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://structure.api-evangelist.com/actor-model/actor-model-cluster-member-list-structure.json",
+  "title": "ClusterMemberList",
+  "description": "List of cluster members",
+  "type": "object",
+  "properties": {
+    "members": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "leader": {
+      "type": "string"
+    },
+    "totalActors": {
+      "type": "integer"
+    }
+  }
+}

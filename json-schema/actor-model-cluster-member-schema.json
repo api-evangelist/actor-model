@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://schema.api-evangelist.com/actor-model/actor-model-clustermember-schema.json",
+  "title": "ClusterMember",
+  "description": "A node in the actor system cluster",
+  "type": "object",
+  "properties": {
+    "nodeId": {
+      "type": "string",
+      "description": "Unique node identifier",
+      "example": "akka://system@10.0.0.1:2551"
+    },
+    "address": {
+      "type": "string",
+      "description": "Network address",
+      "example": "10.0.0.1:2551"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "up",
+        "joining",
+        "leaving",
+        "down",
+        "removed"
+      ],
+      "description": "Member status",
+      "example": "up"
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Node roles",
+      "example": [
+        "worker",
+        "seed"
+      ]
+    },
+    "upSince": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When node joined the cluster"
+    },
+    "actorCount": {
+      "type": "integer",
+      "description": "Number of actors hosted on this node",
+      "example": 1200
+    }
+  }
+}

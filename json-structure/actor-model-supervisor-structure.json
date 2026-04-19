@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://structure.api-evangelist.com/actor-model/actor-model-supervisor-structure.json",
+  "title": "Supervisor",
+  "description": "A supervisor actor managing a set of child actors",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "path": {
+      "type": "string"
+    },
+    "strategy": {
+      "type": "string"
+    },
+    "maxRestarts": {
+      "type": "integer"
+    },
+    "restartWindow": {
+      "type": "integer"
+    },
+    "childCount": {
+      "type": "integer"
+    },
+    "status": {
+      "type": "string"
+    }
+  }
+}

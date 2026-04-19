@@ -1,0 +1,9 @@
+{
+  "id": "session-supervisor",
+  "path": "/system/supervisor/session-supervisor",
+  "strategy": "one-for-one",
+  "maxRestarts": 10,
+  "restartWindow": 60,
+  "childCount": 42,
+  "status": "active"
+}

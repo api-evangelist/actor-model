@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://structure.api-evangelist.com/actor-model/actor-model-system-health-structure.json",
+  "title": "SystemHealth",
+  "description": "Overall health status of the actor system",
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "string"
+    },
+    "activeActors": {
+      "type": "integer"
+    },
+    "messagesPerSecond": {
+      "type": "number"
+    },
+    "errorRate": {
+      "type": "number"
+    },
+    "deadLetters": {
+      "type": "integer"
+    },
+    "clusterSize": {
+      "type": "integer"
+    },
+    "uptime": {
+      "type": "integer"
+    }
+  }
+}

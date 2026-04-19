@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://schema.api-evangelist.com/actor-model/actor-model-systemhealth-schema.json",
+  "title": "SystemHealth",
+  "description": "Overall health status of the actor system",
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": [
+        "healthy",
+        "degraded",
+        "unhealthy"
+      ],
+      "description": "Overall health",
+      "example": "healthy"
+    },
+    "activeActors": {
+      "type": "integer",
+      "description": "Total active actors",
+      "example": 5000
+    },
+    "messagesPerSecond": {
+      "type": "number",
+      "description": "Current message throughput",
+      "example": 12500.5
+    },
+    "errorRate": {
+      "type": "number",
+      "description": "Error rate (messages failed / total)",
+      "example": 0.0001
+    },
+    "deadLetters": {
+      "type": "integer",
+      "description": "Messages sent to dead letter queue",
+      "example": 3
+    },
+    "clusterSize": {
+      "type": "integer",
+      "description": "Number of cluster nodes",
+      "example": 5
+    },
+    "uptime": {
+      "type": "integer",
+      "description": "System uptime in seconds",
+      "example": 86400
+    }
+  }
+}

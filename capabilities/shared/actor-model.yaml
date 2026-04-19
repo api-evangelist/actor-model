@@ -1,0 +1,280 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Actor Model API"
+  description: "Reference API for actor lifecycle management, message passing, supervision hierarchies, cluster membership, and system health in actor model systems."
+  tags:
+    - Actor Model
+    - Concurrency
+    - Distributed Systems
+    - Akka
+    - Erlang
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+binds:
+  - namespace: env
+    keys:
+      ACTOR_SYSTEM_API_TOKEN: ACTOR_SYSTEM_API_TOKEN
+
+capability:
+  consumes:
+    - type: http
+      namespace: actor-model
+      baseUri: "https://api.example.com/actor-system/v1"
+      description: "Actor system management API"
+      authentication:
+        type: bearer
+        token: "{{ACTOR_SYSTEM_API_TOKEN}}"
+      resources:
+        - name: actors
+          path: /actors
+          description: "Actor lifecycle management"
+          operations:
+            - name: list-actors
+              method: GET
+              description: "List all active actors"
+              inputParameters:
+                - name: status
+                  in: query
+                  type: string
+                  required: false
+                  description: "Filter by status"
+                - name: limit
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Page size"
+                - name: cursor
+                  in: query
+                  type: string
+                  required: false
+                  description: "Pagination cursor"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: spawn-actor
+              method: POST
+              description: "Spawn a new actor"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: get-actor
+              method: GET
+              description: "Get a specific actor"
+              inputParameters:
+                - name: actorId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Actor identifier"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: stop-actor
+              method: DELETE
+              description: "Stop an actor"
+              inputParameters:
+                - name: actorId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Actor identifier"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: messages
+          path: /actors/{actorId}/messages
+          description: "Actor mailbox and message passing"
+          operations:
+            - name: send-message
+              method: POST
+              description: "Send a message to an actor"
+              inputParameters:
+                - name: actorId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Target actor ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: inspect-mailbox
+              method: GET
+              description: "Inspect pending messages in actor mailbox"
+              inputParameters:
+                - name: actorId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Actor identifier"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: supervisors
+          path: /supervisors
+          description: "Supervision hierarchy management"
+          operations:
+            - name: list-supervisors
+              method: GET
+              description: "List supervisor actors"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: get-supervisor
+              method: GET
+              description: "Get a specific supervisor"
+              inputParameters:
+                - name: supervisorId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Supervisor ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: cluster
+          path: /cluster
+          description: "Cluster membership and sharding"
+          operations:
+            - name: list-cluster-members
+              method: GET
+              description: "List cluster nodes"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: list-shards
+              method: GET
+              description: "List cluster shards"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: health
+          path: /health
+          description: "System health endpoints"
+          operations:
+            - name: get-health
+              method: GET
+              description: "Get system health status"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8100
+      namespace: actor-model-rest
+      resources:
+        - path: /v1/actors
+          name: actors
+          description: "Actor management"
+          operations:
+            - method: GET
+              name: list-actors
+              description: "List actors"
+              call: "actor-model.list-actors"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/health
+          name: health
+          description: "System health"
+          operations:
+            - method: GET
+              name: get-health
+              description: "System health"
+              call: "actor-model.get-health"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9100
+      namespace: actor-model-mcp
+      transport: http
+      tools:
+        - name: list-actors
+          description: "List all actors in the system"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "actor-model.list-actors"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-actor
+          description: "Get details of a specific actor"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "actor-model.get-actor"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: send-message
+          description: "Send a message to an actor's mailbox"
+          hints:
+            readOnly: false
+            openWorld: true
+          call: "actor-model.send-message"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: inspect-mailbox
+          description: "Inspect pending messages in an actor's mailbox"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "actor-model.inspect-mailbox"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-supervisors
+          description: "List supervisor actors and their strategies"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "actor-model.list-supervisors"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-cluster-members
+          description: "List all nodes in the actor system cluster"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "actor-model.list-cluster-members"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-health
+          description: "Get system health including throughput and error rates"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "actor-model.get-health"
+          outputParameters:
+            - type: object
+              mapping: "$."

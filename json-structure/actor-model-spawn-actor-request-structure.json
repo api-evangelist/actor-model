@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://structure.api-evangelist.com/actor-model/actor-model-spawn-actor-request-structure.json",
+  "title": "SpawnActorRequest",
+  "description": "Request to spawn a new actor",
+  "type": "object",
+  "properties": {
+    "behavior": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "supervisorId": {
+      "type": "string"
+    },
+    "initialState": {
+      "type": "object"
+    }
+  }
+}

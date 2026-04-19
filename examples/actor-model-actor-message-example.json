@@ -1,0 +1,7 @@
+{
+  "type": "UpdateProfile",
+  "payload": {},
+  "replyTo": "caller-actor-456",
+  "correlationId": "trace-xyz-789",
+  "priority": "normal"
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://schema.api-evangelist.com/actor-model/actor-model-spawnactorrequest-schema.json",
+  "title": "SpawnActorRequest",
+  "description": "Request to spawn a new actor",
+  "type": "object",
+  "properties": {
+    "behavior": {
+      "type": "string",
+      "description": "Behavior class or type name",
+      "example": "UserSessionBehavior"
+    },
+    "id": {
+      "type": "string",
+      "description": "Optional custom actor ID (auto-generated if omitted)",
+      "example": "session-abc"
+    },
+    "supervisorId": {
+      "type": "string",
+      "description": "Parent supervisor ID",
+      "example": "session-supervisor"
+    },
+    "initialState": {
+      "type": "object",
+      "description": "Initial state to inject into the actor",
+      "additionalProperties": true
+    }
+  }
+}

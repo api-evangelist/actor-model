@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://schema.api-evangelist.com/actor-model/actor-model-mailboxinspection-schema.json",
+  "title": "MailboxInspection",
+  "description": "Inspection of pending messages in an actor's mailbox",
+  "type": "object",
+  "properties": {
+    "actorId": {
+      "type": "string",
+      "description": "Actor identifier",
+      "example": "user-123"
+    },
+    "pendingCount": {
+      "type": "integer",
+      "description": "Total pending messages",
+      "example": 5
+    },
+    "messages": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ActorMessage"
+      }
+    },
+    "oldestMessageAge": {
+      "type": "integer",
+      "description": "Age of oldest message in milliseconds",
+      "example": 350
+    }
+  }
+}

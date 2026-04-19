@@ -1,0 +1,6 @@
+{
+  "behavior": "UserSessionBehavior",
+  "id": "session-abc",
+  "supervisorId": "session-supervisor",
+  "initialState": {}
+}
