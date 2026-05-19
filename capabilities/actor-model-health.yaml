@@ -1,0 +1,102 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Actor Model API — Health
+  description: 'Actor Model API — Health. 2 operations. Lead operation: Actor Model Get System Health. Self-contained Naftiko
+    capability covering one Actor Model business surface.'
+  tags:
+  - Actor Model
+  - Health
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ACTOR_MODEL_API_KEY: ACTOR_MODEL_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: actor-model-health
+    baseUri: https://api.example.com/actor-system/v1
+    description: Actor Model API — Health business capability. Self-contained, no shared references.
+    resources:
+    - name: health
+      path: /health
+      operations:
+      - name: gethealth
+        method: GET
+        description: Actor Model Get System Health
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: health-ready
+      path: /health/ready
+      operations:
+      - name: getreadiness
+        method: GET
+        description: Actor Model Get Readiness
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.ACTOR_MODEL_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: actor-model-health-rest
+    port: 8080
+    description: REST adapter for Actor Model API — Health. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/health
+      name: health
+      description: REST surface for health.
+      operations:
+      - method: GET
+        name: gethealth
+        description: Actor Model Get System Health
+        call: actor-model-health.gethealth
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/health/ready
+      name: health-ready
+      description: REST surface for health-ready.
+      operations:
+      - method: GET
+        name: getreadiness
+        description: Actor Model Get Readiness
+        call: actor-model-health.getreadiness
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: actor-model-health-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Actor Model API — Health. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: actor-model-get-system-health
+      description: Actor Model Get System Health
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: actor-model-health.gethealth
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: actor-model-get-readiness
+      description: Actor Model Get Readiness
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: actor-model-health.getreadiness
+      outputParameters:
+      - type: object
+        mapping: $.

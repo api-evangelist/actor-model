@@ -1,0 +1,169 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Actor Model API — Supervisors
+  description: 'Actor Model API — Supervisors. 3 operations. Lead operation: Actor Model List Supervisors. Self-contained
+    Naftiko capability covering one Actor Model business surface.'
+  tags:
+  - Actor Model
+  - Supervisors
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ACTOR_MODEL_API_KEY: ACTOR_MODEL_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: actor-model-supervisors
+    baseUri: https://api.example.com/actor-system/v1
+    description: Actor Model API — Supervisors business capability. Self-contained, no shared references.
+    resources:
+    - name: supervisors
+      path: /supervisors
+      operations:
+      - name: listsupervisors
+        method: GET
+        description: Actor Model List Supervisors
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+          description: Maximum number of supervisors to return
+        - name: cursor
+          in: query
+          type: string
+          description: Pagination cursor
+    - name: supervisors-supervisorId
+      path: /supervisors/{supervisorId}
+      operations:
+      - name: getsupervisor
+        method: GET
+        description: Actor Model Get Supervisor
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: supervisorId
+          in: path
+          type: string
+          description: Supervisor actor identifier
+          required: true
+    - name: supervisors-supervisorId-children
+      path: /supervisors/{supervisorId}/children
+      operations:
+      - name: listchildren
+        method: GET
+        description: Actor Model List Supervisor Children
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: supervisorId
+          in: path
+          type: string
+          description: Supervisor actor identifier
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.ACTOR_MODEL_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: actor-model-supervisors-rest
+    port: 8080
+    description: REST adapter for Actor Model API — Supervisors. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/supervisors
+      name: supervisors
+      description: REST surface for supervisors.
+      operations:
+      - method: GET
+        name: listsupervisors
+        description: Actor Model List Supervisors
+        call: actor-model-supervisors.listsupervisors
+        with:
+          limit: rest.limit
+          cursor: rest.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/supervisors/{supervisorid}
+      name: supervisors-supervisorid
+      description: REST surface for supervisors-supervisorId.
+      operations:
+      - method: GET
+        name: getsupervisor
+        description: Actor Model Get Supervisor
+        call: actor-model-supervisors.getsupervisor
+        with:
+          supervisorId: rest.supervisorId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/supervisors/{supervisorid}/children
+      name: supervisors-supervisorid-children
+      description: REST surface for supervisors-supervisorId-children.
+      operations:
+      - method: GET
+        name: listchildren
+        description: Actor Model List Supervisor Children
+        call: actor-model-supervisors.listchildren
+        with:
+          supervisorId: rest.supervisorId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: actor-model-supervisors-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Actor Model API — Supervisors. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: actor-model-list-supervisors
+      description: Actor Model List Supervisors
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: actor-model-supervisors.listsupervisors
+      with:
+        limit: tools.limit
+        cursor: tools.cursor
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: actor-model-get-supervisor
+      description: Actor Model Get Supervisor
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: actor-model-supervisors.getsupervisor
+      with:
+        supervisorId: tools.supervisorId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: actor-model-list-supervisor-children
+      description: Actor Model List Supervisor Children
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: actor-model-supervisors.listchildren
+      with:
+        supervisorId: tools.supervisorId
+      outputParameters:
+      - type: object
+        mapping: $.

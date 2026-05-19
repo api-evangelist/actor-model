@@ -1,0 +1,111 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Actor Model API — Cluster
+  description: 'Actor Model API — Cluster. 2 operations. Lead operation: Actor Model List Cluster Members. Self-contained
+    Naftiko capability covering one Actor Model business surface.'
+  tags:
+  - Actor Model
+  - Cluster
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ACTOR_MODEL_API_KEY: ACTOR_MODEL_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: actor-model-cluster
+    baseUri: https://api.example.com/actor-system/v1
+    description: Actor Model API — Cluster business capability. Self-contained, no shared references.
+    resources:
+    - name: cluster-members
+      path: /cluster/members
+      operations:
+      - name: listclustermembers
+        method: GET
+        description: Actor Model List Cluster Members
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: status
+          in: query
+          type: string
+          description: Filter by member status (up, joining, leaving, down)
+    - name: cluster-shards
+      path: /cluster/shards
+      operations:
+      - name: listshards
+        method: GET
+        description: Actor Model List Cluster Shards
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.ACTOR_MODEL_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: actor-model-cluster-rest
+    port: 8080
+    description: REST adapter for Actor Model API — Cluster. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/cluster/members
+      name: cluster-members
+      description: REST surface for cluster-members.
+      operations:
+      - method: GET
+        name: listclustermembers
+        description: Actor Model List Cluster Members
+        call: actor-model-cluster.listclustermembers
+        with:
+          status: rest.status
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/cluster/shards
+      name: cluster-shards
+      description: REST surface for cluster-shards.
+      operations:
+      - method: GET
+        name: listshards
+        description: Actor Model List Cluster Shards
+        call: actor-model-cluster.listshards
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: actor-model-cluster-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Actor Model API — Cluster. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: actor-model-list-cluster-members
+      description: Actor Model List Cluster Members
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: actor-model-cluster.listclustermembers
+      with:
+        status: tools.status
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: actor-model-list-cluster-shards
+      description: Actor Model List Cluster Shards
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: actor-model-cluster.listshards
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,128 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Actor Model API — Mailboxes
+  description: 'Actor Model API — Mailboxes. 2 operations. Lead operation: Actor Model Send Message. Self-contained Naftiko
+    capability covering one Actor Model business surface.'
+  tags:
+  - Actor Model
+  - Mailboxes
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ACTOR_MODEL_API_KEY: ACTOR_MODEL_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: actor-model-mailboxes
+    baseUri: https://api.example.com/actor-system/v1
+    description: Actor Model API — Mailboxes business capability. Self-contained, no shared references.
+    resources:
+    - name: actors-actorId-messages
+      path: /actors/{actorId}/messages
+      operations:
+      - name: sendmessage
+        method: POST
+        description: Actor Model Send Message
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: actorId
+          in: path
+          type: string
+          description: Target actor identifier
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: inspectmailbox
+        method: GET
+        description: Actor Model Inspect Mailbox
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: actorId
+          in: path
+          type: string
+          description: Target actor identifier
+          required: true
+        - name: limit
+          in: query
+          type: integer
+          description: Number of pending messages to inspect
+    authentication:
+      type: bearer
+      token: '{{env.ACTOR_MODEL_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: actor-model-mailboxes-rest
+    port: 8080
+    description: REST adapter for Actor Model API — Mailboxes. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/actors/{actorid}/messages
+      name: actors-actorid-messages
+      description: REST surface for actors-actorId-messages.
+      operations:
+      - method: POST
+        name: sendmessage
+        description: Actor Model Send Message
+        call: actor-model-mailboxes.sendmessage
+        with:
+          actorId: rest.actorId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: inspectmailbox
+        description: Actor Model Inspect Mailbox
+        call: actor-model-mailboxes.inspectmailbox
+        with:
+          actorId: rest.actorId
+          limit: rest.limit
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: actor-model-mailboxes-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Actor Model API — Mailboxes. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: actor-model-send-message
+      description: Actor Model Send Message
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: actor-model-mailboxes.sendmessage
+      with:
+        actorId: tools.actorId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: actor-model-inspect-mailbox
+      description: Actor Model Inspect Mailbox
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: actor-model-mailboxes.inspectmailbox
+      with:
+        actorId: tools.actorId
+        limit: tools.limit
+      outputParameters:
+      - type: object
+        mapping: $.
