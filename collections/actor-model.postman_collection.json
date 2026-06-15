@@ -1,0 +1,2317 @@
+{
+  "item": [
+    {
+      "id": "37b42876-7266-487d-873d-6436fbbbc1f6",
+      "name": "Actors",
+      "description": {
+        "content": "Actor lifecycle and management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1f28c2aa-9a27-498d-833d-7edeb9c20e9b",
+          "name": "Actor Model List Actors",
+          "request": {
+            "name": "Actor Model List Actors",
+            "description": {
+              "content": "List all active actors in the system with their current state and mailbox statistics.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "actors"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by actor status (active, idle, stopped)"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "100",
+                  "description": "Maximum number of actors to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Pagination cursor for next page of results"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d4bb2115-96da-4040-990f-5956d91b54f5",
+              "name": "List of actors",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "actors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"actors\": [\n    {\n      \"id\": \"user-123\",\n      \"path\": \"/user/supervisor/worker-1\",\n      \"behavior\": \"UserSessionBehavior\",\n      \"status\": \"active\",\n      \"mailboxSize\": 3,\n      \"supervisorId\": \"supervisor-pool-1\",\n      \"spawnedAt\": \"2012-04-11T09:50:35.309Z\",\n      \"lastMessageAt\": \"1997-02-26T10:03:49.249Z\",\n      \"messageCount\": 1024,\n      \"restartCount\": 0\n    },\n    {\n      \"id\": \"user-123\",\n      \"path\": \"/user/supervisor/worker-1\",\n      \"behavior\": \"UserSessionBehavior\",\n      \"status\": \"active\",\n      \"mailboxSize\": 3,\n      \"supervisorId\": \"supervisor-pool-1\",\n      \"spawnedAt\": \"1992-12-26T15:06:16.193Z\",\n      \"lastMessageAt\": \"2023-04-24T10:39:42.884Z\",\n      \"messageCount\": 1024,\n      \"restartCount\": 0\n    }\n  ],\n  \"total\": 500,\n  \"cursor\": \"eyJwYWdlIjoxfQ==\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0bfc5612-c3f0-4bf1-8407-f95292839f00",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "actors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fc11a514-4505-4e05-86a9-2fffea57dca7",
+          "name": "Actor Model Spawn Actor",
+          "request": {
+            "name": "Actor Model Spawn Actor",
+            "description": {
+              "content": "Spawn a new actor with the specified behavior and optional initial state.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "actors"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"behavior\": \"<string>\",\n  \"id\": \"<string>\",\n  \"supervisorId\": \"<string>\",\n  \"initialState\": {\n    \"key_0\": 5612\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "303b59bd-cf0f-4a28-8edd-9133da90f0bb",
+              "name": "Actor spawned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "actors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"behavior\": \"UserSessionBehavior\",\n  \"id\": \"session-abc\",\n  \"supervisorId\": \"session-supervisor\",\n  \"initialState\": {\n    \"key_0\": 8844.785085465172,\n    \"key_1\": 3388,\n    \"key_2\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"user-123\",\n  \"path\": \"/user/supervisor/worker-1\",\n  \"behavior\": \"UserSessionBehavior\",\n  \"status\": \"active\",\n  \"mailboxSize\": 3,\n  \"supervisorId\": \"supervisor-pool-1\",\n  \"spawnedAt\": \"1989-12-25T03:02:03.412Z\",\n  \"lastMessageAt\": \"2004-06-18T01:13:13.244Z\",\n  \"messageCount\": 1024,\n  \"restartCount\": 0\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "00bb00d9-75b6-4a1f-9633-371f30b20a42",
+              "name": "Invalid actor specification",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "actors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"behavior\": \"UserSessionBehavior\",\n  \"id\": \"session-abc\",\n  \"supervisorId\": \"session-supervisor\",\n  \"initialState\": {\n    \"key_0\": 8844.785085465172,\n    \"key_1\": 3388,\n    \"key_2\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "923b3e13-a7e0-4792-8c32-321d3b9c222d",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "actors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"behavior\": \"UserSessionBehavior\",\n  \"id\": \"session-abc\",\n  \"supervisorId\": \"session-supervisor\",\n  \"initialState\": {\n    \"key_0\": 8844.785085465172,\n    \"key_1\": 3388,\n    \"key_2\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9a98610c-c569-44f6-a200-d9429364a25f",
+          "name": "Actor Model Get Actor",
+          "request": {
+            "name": "Actor Model Get Actor",
+            "description": {
+              "content": "Retrieve details of a specific actor including its current state, mailbox size, and supervision link.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "actors",
+                ":actorId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "actorId",
+                  "description": "(Required) Unique actor identifier or path"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1a93af3b-8be8-44d5-bc9b-66e765f6baef",
+              "name": "Actor details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "actors",
+                    ":actorId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "actorId",
+                      "description": "(Required) Unique actor identifier or path"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"user-123\",\n  \"path\": \"/user/supervisor/worker-1\",\n  \"behavior\": \"UserSessionBehavior\",\n  \"status\": \"active\",\n  \"mailboxSize\": 3,\n  \"supervisorId\": \"supervisor-pool-1\",\n  \"spawnedAt\": \"1989-12-25T03:02:03.412Z\",\n  \"lastMessageAt\": \"2004-06-18T01:13:13.244Z\",\n  \"messageCount\": 1024,\n  \"restartCount\": 0\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8dc127b1-148c-4964-a66a-9d65278d514e",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "actors",
+                    ":actorId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "actorId",
+                      "description": "(Required) Unique actor identifier or path"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c6f844fa-ecf4-4f62-8cc9-d77129496b05",
+              "name": "Actor not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "actors",
+                    ":actorId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "actorId",
+                      "description": "(Required) Unique actor identifier or path"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3b0be8a4-dd7b-439d-9034-f046cda9d327",
+          "name": "Actor Model Stop Actor",
+          "request": {
+            "name": "Actor Model Stop Actor",
+            "description": {
+              "content": "Send a stop signal to an actor, gracefully draining its mailbox before termination.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "actors",
+                ":actorId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "graceful",
+                  "value": "true",
+                  "description": "Whether to drain mailbox before stopping"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "actorId",
+                  "description": "(Required) Unique actor identifier or path"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4e02c2f9-64d3-4b09-8922-90938680b97e",
+              "name": "Actor stop signal sent",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "actors",
+                    ":actorId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "graceful",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "actorId",
+                      "description": "(Required) Unique actor identifier or path"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f6aab3e3-f95a-49d8-af57-d9ce309e699a",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "actors",
+                    ":actorId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "graceful",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "actorId",
+                      "description": "(Required) Unique actor identifier or path"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "da9f09e1-d541-4100-b77b-7c05aea9675b",
+              "name": "Actor not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "actors",
+                    ":actorId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "graceful",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "actorId",
+                      "description": "(Required) Unique actor identifier or path"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "96236590-8c82-4856-b16d-bd7a82437977",
+      "name": "Mailboxes",
+      "description": {
+        "content": "Message queue inspection",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e25e89ad-3c40-41e4-8231-57da7cc3a0f9",
+          "name": "Actor Model Send Message",
+          "request": {
+            "name": "Actor Model Send Message",
+            "description": {
+              "content": "Send a message to an actor's mailbox for asynchronous processing.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "actors",
+                ":actorId",
+                "messages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "actorId",
+                  "description": "(Required) Target actor identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"<string>\",\n  \"payload\": {\n    \"key_0\": 1652.6887432726533,\n    \"key_1\": 1405.7010746723686\n  },\n  \"replyTo\": \"<string>\",\n  \"correlationId\": \"<string>\",\n  \"priority\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c37ed3d9-d67d-41a8-aff6-3989446af178",
+              "name": "Message accepted for delivery",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "actors",
+                    ":actorId",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "actorId",
+                      "description": "(Required) Target actor identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"UpdateProfile\",\n  \"payload\": {\n    \"key_0\": 6644\n  },\n  \"replyTo\": \"caller-actor-456\",\n  \"correlationId\": \"trace-xyz-789\",\n  \"priority\": \"normal\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4460002a-c735-4f93-b30c-822372aec47b",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "actors",
+                    ":actorId",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "actorId",
+                      "description": "(Required) Target actor identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"UpdateProfile\",\n  \"payload\": {\n    \"key_0\": 6644\n  },\n  \"replyTo\": \"caller-actor-456\",\n  \"correlationId\": \"trace-xyz-789\",\n  \"priority\": \"normal\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7c6edcc7-34ad-4efb-a9f9-84303443ffc2",
+              "name": "Actor not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "actors",
+                    ":actorId",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "actorId",
+                      "description": "(Required) Target actor identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"UpdateProfile\",\n  \"payload\": {\n    \"key_0\": 6644\n  },\n  \"replyTo\": \"caller-actor-456\",\n  \"correlationId\": \"trace-xyz-789\",\n  \"priority\": \"normal\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "24e3a9fd-b956-4c5a-9eb8-b694051dc235",
+              "name": "Mailbox full — back pressure applied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "actors",
+                    ":actorId",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "actorId",
+                      "description": "(Required) Target actor identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"UpdateProfile\",\n  \"payload\": {\n    \"key_0\": 6644\n  },\n  \"replyTo\": \"caller-actor-456\",\n  \"correlationId\": \"trace-xyz-789\",\n  \"priority\": \"normal\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1c349d34-7a10-4327-bc2e-0806909ea0b6",
+          "name": "Actor Model Inspect Mailbox",
+          "request": {
+            "name": "Actor Model Inspect Mailbox",
+            "description": {
+              "content": "Inspect pending messages in an actor's mailbox without consuming them. Useful for debugging.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "actors",
+                ":actorId",
+                "messages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of pending messages to inspect"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "actorId",
+                  "description": "(Required) Target actor identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "aef758f3-fce1-4864-a9fa-e1039a8bc26a",
+              "name": "Mailbox inspection result",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "actors",
+                    ":actorId",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "actorId",
+                      "description": "(Required) Target actor identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"actorId\": \"user-123\",\n  \"pendingCount\": 5,\n  \"messages\": [\n    {\n      \"type\": \"UpdateProfile\",\n      \"payload\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": 5786.582384189595\n      },\n      \"replyTo\": \"caller-actor-456\",\n      \"correlationId\": \"trace-xyz-789\",\n      \"priority\": \"normal\"\n    },\n    {\n      \"type\": \"UpdateProfile\",\n      \"payload\": {\n        \"key_0\": false,\n        \"key_1\": 6567,\n        \"key_2\": true,\n        \"key_3\": false\n      },\n      \"replyTo\": \"caller-actor-456\",\n      \"correlationId\": \"trace-xyz-789\",\n      \"priority\": \"normal\"\n    }\n  ],\n  \"oldestMessageAge\": 350\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e8c63c3-9a52-4c77-90ef-4f8c65d9b6c7",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "actors",
+                    ":actorId",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "actorId",
+                      "description": "(Required) Target actor identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f58b09bc-c4a1-4ee3-913a-94c1d49aacd4",
+              "name": "Actor not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "actors",
+                    ":actorId",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "actorId",
+                      "description": "(Required) Target actor identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "9c8d7eb3-f12d-4e21-a3af-e1729aa35040",
+      "name": "Supervisors",
+      "description": {
+        "content": "Supervision hierarchy",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7a813b89-712e-4933-bc3e-5005026b8097",
+          "name": "Actor Model List Supervisors",
+          "request": {
+            "name": "Actor Model List Supervisors",
+            "description": {
+              "content": "List all supervisor actors with their child counts and supervision strategies.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "supervisors"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50",
+                  "description": "Maximum number of supervisors to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Pagination cursor"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fcb94873-34c8-405f-896b-b4c234564bf9",
+              "name": "List of supervisors",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "supervisors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"supervisors\": [\n    {\n      \"id\": \"session-supervisor\",\n      \"path\": \"/system/supervisor/session-supervisor\",\n      \"strategy\": \"one-for-one\",\n      \"maxRestarts\": 10,\n      \"restartWindow\": 60,\n      \"childCount\": 42,\n      \"status\": \"active\"\n    },\n    {\n      \"id\": \"session-supervisor\",\n      \"path\": \"/system/supervisor/session-supervisor\",\n      \"strategy\": \"one-for-one\",\n      \"maxRestarts\": 10,\n      \"restartWindow\": 60,\n      \"childCount\": 42,\n      \"status\": \"active\"\n    }\n  ],\n  \"total\": 12,\n  \"cursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9da1ed71-fbf1-4a0b-9376-6ee9f56e7dbf",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "supervisors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "02cbe8fe-8e44-4aff-9de8-35165a45228e",
+          "name": "Actor Model Get Supervisor",
+          "request": {
+            "name": "Actor Model Get Supervisor",
+            "description": {
+              "content": "Retrieve the supervision tree and strategy for a specific supervisor actor.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "supervisors",
+                ":supervisorId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "supervisorId",
+                  "description": "(Required) Supervisor actor identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "56f187d1-b535-4c39-88c8-5d71ec2ee7f5",
+              "name": "Supervisor details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "supervisors",
+                    ":supervisorId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "supervisorId",
+                      "description": "(Required) Supervisor actor identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"session-supervisor\",\n  \"path\": \"/system/supervisor/session-supervisor\",\n  \"strategy\": \"one-for-one\",\n  \"maxRestarts\": 10,\n  \"restartWindow\": 60,\n  \"childCount\": 42,\n  \"status\": \"active\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b26a98f6-cb58-4c59-b4fa-e920b896ef00",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "supervisors",
+                    ":supervisorId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "supervisorId",
+                      "description": "(Required) Supervisor actor identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d6bb382e-8ad1-4458-b1de-ebf0aa831f27",
+              "name": "Supervisor not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "supervisors",
+                    ":supervisorId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "supervisorId",
+                      "description": "(Required) Supervisor actor identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a0680ec0-87d7-419c-814f-a45db6ace53e",
+          "name": "Actor Model List Supervisor Children",
+          "request": {
+            "name": "Actor Model List Supervisor Children",
+            "description": {
+              "content": "List all child actors currently under a supervisor's watch.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "supervisors",
+                ":supervisorId",
+                "children"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "supervisorId",
+                  "description": "(Required) Supervisor actor identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dceafe05-d876-4c32-9114-3667d6d6d487",
+              "name": "List of child actors",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "supervisors",
+                    ":supervisorId",
+                    "children"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "supervisorId",
+                      "description": "(Required) Supervisor actor identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"actors\": [\n    {\n      \"id\": \"user-123\",\n      \"path\": \"/user/supervisor/worker-1\",\n      \"behavior\": \"UserSessionBehavior\",\n      \"status\": \"active\",\n      \"mailboxSize\": 3,\n      \"supervisorId\": \"supervisor-pool-1\",\n      \"spawnedAt\": \"2012-04-11T09:50:35.309Z\",\n      \"lastMessageAt\": \"1997-02-26T10:03:49.249Z\",\n      \"messageCount\": 1024,\n      \"restartCount\": 0\n    },\n    {\n      \"id\": \"user-123\",\n      \"path\": \"/user/supervisor/worker-1\",\n      \"behavior\": \"UserSessionBehavior\",\n      \"status\": \"active\",\n      \"mailboxSize\": 3,\n      \"supervisorId\": \"supervisor-pool-1\",\n      \"spawnedAt\": \"1992-12-26T15:06:16.193Z\",\n      \"lastMessageAt\": \"2023-04-24T10:39:42.884Z\",\n      \"messageCount\": 1024,\n      \"restartCount\": 0\n    }\n  ],\n  \"total\": 500,\n  \"cursor\": \"eyJwYWdlIjoxfQ==\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "872ddd65-3d4f-4017-8f0f-e70fc101d17a",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "supervisors",
+                    ":supervisorId",
+                    "children"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "supervisorId",
+                      "description": "(Required) Supervisor actor identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4227355d-91de-426a-9fc7-19338e8781d5",
+              "name": "Supervisor not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "supervisors",
+                    ":supervisorId",
+                    "children"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "supervisorId",
+                      "description": "(Required) Supervisor actor identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "ee844321-8762-498a-9bdc-a0828607b14b",
+      "name": "Cluster",
+      "description": {
+        "content": "Cluster membership and sharding",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d9c50419-4f7e-4dea-b63f-37e80cd930e0",
+          "name": "Actor Model List Cluster Members",
+          "request": {
+            "name": "Actor Model List Cluster Members",
+            "description": {
+              "content": "List all nodes in the actor system cluster with their status and roles.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "cluster",
+                "members"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by member status (up, joining, leaving, down)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b8a84877-2569-41a7-8814-64af45d1220e",
+              "name": "Cluster member list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cluster",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"members\": [\n    {\n      \"nodeId\": \"akka://system@10.0.0.1:2551\",\n      \"address\": \"10.0.0.1:2551\",\n      \"status\": \"up\",\n      \"roles\": [\n        \"worker\",\n        \"seed\"\n      ],\n      \"upSince\": \"1946-12-06T23:07:51.872Z\",\n      \"actorCount\": 1200\n    },\n    {\n      \"nodeId\": \"akka://system@10.0.0.1:2551\",\n      \"address\": \"10.0.0.1:2551\",\n      \"status\": \"up\",\n      \"roles\": [\n        \"worker\",\n        \"seed\"\n      ],\n      \"upSince\": \"2009-10-01T11:51:42.377Z\",\n      \"actorCount\": 1200\n    }\n  ],\n  \"leader\": \"akka://system@10.0.0.1:2551\",\n  \"totalActors\": 5000\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b4dc112e-58af-4586-8837-41f00a1169c8",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cluster",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6f81512d-1b36-42c2-8811-8431798bf397",
+          "name": "Actor Model List Cluster Shards",
+          "request": {
+            "name": "Actor Model List Cluster Shards",
+            "description": {
+              "content": "List all shards in the cluster with their location and actor count.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "cluster",
+                "shards"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "96c5126e-d59a-4fc7-bb22-885d7cb1bf33",
+              "name": "Shard list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cluster",
+                    "shards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"shards\": [\n    {\n      \"shardId\": \"shard-42\",\n      \"region\": \"UserRegion\",\n      \"nodeId\": \"akka://system@10.0.0.2:2551\",\n      \"entityCount\": 150,\n      \"status\": \"active\"\n    },\n    {\n      \"shardId\": \"shard-42\",\n      \"region\": \"UserRegion\",\n      \"nodeId\": \"akka://system@10.0.0.2:2551\",\n      \"entityCount\": 150,\n      \"status\": \"active\"\n    }\n  ],\n  \"totalShards\": 100,\n  \"totalEntities\": 15000\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cfa68693-cec7-40e9-a488-41a6d871c827",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cluster",
+                    "shards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "438424f9-beab-4807-bb29-702a5120b46c",
+      "name": "Health",
+      "description": {
+        "content": "System health and diagnostics",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "794ae529-750d-4003-ae20-7e1d4499530d",
+          "name": "Actor Model Get System Health",
+          "request": {
+            "name": "Actor Model Get System Health",
+            "description": {
+              "content": "Get the overall health status of the actor system including actor count, throughput, and error rates.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "health"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5ad6ab77-0a80-48aa-b522-7945db82eaef",
+              "name": "System health status",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "health"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"healthy\",\n  \"activeActors\": 5000,\n  \"messagesPerSecond\": 12500.5,\n  \"errorRate\": 0.0001,\n  \"deadLetters\": 3,\n  \"clusterSize\": 5,\n  \"uptime\": 86400\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5787820e-dc27-403a-b5f0-45d26729fce1",
+          "name": "Actor Model Get Readiness",
+          "request": {
+            "name": "Actor Model Get Readiness",
+            "description": {
+              "content": "Kubernetes-compatible readiness probe endpoint for the actor system.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "health",
+                "ready"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "da9924aa-86e5-44d9-926a-167b9bb3af9f",
+              "name": "System is ready",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "health",
+                    "ready"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "12630c70-d636-48b9-882b-89547b75449e",
+              "name": "System is not ready",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "health",
+                    "ready"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.example.com/actor-system/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "fe249725-81ec-4726-ad6d-d0576ebc90bc",
+    "name": "Actor Model API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Reference API for actor model systems covering actor lifecycle management, message passing, supervision, clustering, and distributed state. Applicable to frameworks including Akka, Erlang/OTP, Microsoft Orleans, Pony, and Proto.Actor.\n\nContact Support:\n Name: Actor Model Reference",
+      "type": "text/plain"
+    }
+  }
+}

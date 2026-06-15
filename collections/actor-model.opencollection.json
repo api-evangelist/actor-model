@@ -1,0 +1,309 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Actor Model API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Actors",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Actor Model List Actors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.example.com/actor-system/v1/actors",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by actor status (active, idle, stopped)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of actors to return"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor for next page of results"
+              }
+            ]
+          },
+          "docs": "List all active actors in the system with their current state and mailbox statistics."
+        },
+        {
+          "info": {
+            "name": "Actor Model Spawn Actor",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.example.com/actor-system/v1/actors",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Spawn a new actor with the specified behavior and optional initial state."
+        },
+        {
+          "info": {
+            "name": "Actor Model Get Actor",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.example.com/actor-system/v1/actors/:actorId",
+            "params": [
+              {
+                "name": "actorId",
+                "value": "",
+                "type": "path",
+                "description": "Unique actor identifier or path"
+              }
+            ]
+          },
+          "docs": "Retrieve details of a specific actor including its current state, mailbox size, and supervision link."
+        },
+        {
+          "info": {
+            "name": "Actor Model Stop Actor",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.example.com/actor-system/v1/actors/:actorId",
+            "params": [
+              {
+                "name": "actorId",
+                "value": "",
+                "type": "path",
+                "description": "Unique actor identifier or path"
+              },
+              {
+                "name": "graceful",
+                "value": "",
+                "type": "query",
+                "description": "Whether to drain mailbox before stopping"
+              }
+            ]
+          },
+          "docs": "Send a stop signal to an actor, gracefully draining its mailbox before termination."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Mailboxes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Actor Model Inspect Mailbox",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.example.com/actor-system/v1/actors/:actorId/messages",
+            "params": [
+              {
+                "name": "actorId",
+                "value": "",
+                "type": "path",
+                "description": "Target actor identifier"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of pending messages to inspect"
+              }
+            ]
+          },
+          "docs": "Inspect pending messages in an actor's mailbox without consuming them. Useful for debugging."
+        },
+        {
+          "info": {
+            "name": "Actor Model Send Message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.example.com/actor-system/v1/actors/:actorId/messages",
+            "params": [
+              {
+                "name": "actorId",
+                "value": "",
+                "type": "path",
+                "description": "Target actor identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a message to an actor's mailbox for asynchronous processing."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Supervisors",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Actor Model List Supervisors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.example.com/actor-system/v1/supervisors",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of supervisors to return"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor"
+              }
+            ]
+          },
+          "docs": "List all supervisor actors with their child counts and supervision strategies."
+        },
+        {
+          "info": {
+            "name": "Actor Model Get Supervisor",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.example.com/actor-system/v1/supervisors/:supervisorId",
+            "params": [
+              {
+                "name": "supervisorId",
+                "value": "",
+                "type": "path",
+                "description": "Supervisor actor identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve the supervision tree and strategy for a specific supervisor actor."
+        },
+        {
+          "info": {
+            "name": "Actor Model List Supervisor Children",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.example.com/actor-system/v1/supervisors/:supervisorId/children",
+            "params": [
+              {
+                "name": "supervisorId",
+                "value": "",
+                "type": "path",
+                "description": "Supervisor actor identifier"
+              }
+            ]
+          },
+          "docs": "List all child actors currently under a supervisor's watch."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Cluster",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Actor Model List Cluster Members",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.example.com/actor-system/v1/cluster/members",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by member status (up, joining, leaving, down)"
+              }
+            ]
+          },
+          "docs": "List all nodes in the actor system cluster with their status and roles."
+        },
+        {
+          "info": {
+            "name": "Actor Model List Cluster Shards",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.example.com/actor-system/v1/cluster/shards"
+          },
+          "docs": "List all shards in the cluster with their location and actor count."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Health",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Actor Model Get System Health",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.example.com/actor-system/v1/health"
+          },
+          "docs": "Get the overall health status of the actor system including actor count, throughput, and error rates."
+        },
+        {
+          "info": {
+            "name": "Actor Model Get Readiness",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.example.com/actor-system/v1/health/ready"
+          },
+          "docs": "Kubernetes-compatible readiness probe endpoint for the actor system."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
