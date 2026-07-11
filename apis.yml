@@ -42,6 +42,12 @@ apis:
       system health in actor model systems. Applicable to frameworks including Akka, Erlang/OTP, Microsoft Orleans, and
       Proto.Actor.
 common:
+  - type: VulnerabilityDisclosure
+    url: security/actor-model-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/actor-model-domain-security.yml
+  - type: Authentication
+    url: authentication/actor-model-authentication.yml
   - type: Website
     url: https://en.wikipedia.org/wiki/Actor_model
   - type: Documentation
