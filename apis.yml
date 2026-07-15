@@ -42,6 +42,8 @@ apis:
       system health in actor model systems. Applicable to frameworks including Akka, Erlang/OTP, Microsoft Orleans, and
       Proto.Actor.
 common:
+  - type: AgenticAccess
+    url: agentic-access/actor-model-agentic-access.yml
   - type: VulnerabilityDisclosure
     url: security/actor-model-vulnerability-disclosure.yml
   - type: DomainSecurity
