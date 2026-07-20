@@ -1,6 +1,7 @@
 aid: actor-model
 url: https://raw.githubusercontent.com/api-evangelist/actor-model/refs/heads/main/apis.yml
 name: Actor Model
+kind: topic
 type: Index
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
