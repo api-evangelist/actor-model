@@ -1,0 +1,86 @@
+openapi: 3.1.0
+info:
+  title: Actor Model Actors Health API
+  description: Reference API for actor model systems covering actor lifecycle management, message passing, supervision, clustering, and distributed state. Applicable to frameworks including Akka, Erlang/OTP, Microsoft Orleans, Pony, and Proto.Actor.
+  version: 1.0.0
+  contact:
+    name: Actor Model Reference
+    url: https://en.wikipedia.org/wiki/Actor_model
+servers:
+- url: https://api.example.com/actor-system/v1
+  description: Actor system management API
+security:
+- BearerAuth: []
+tags:
+- name: Health
+  description: System health and diagnostics
+paths:
+  /health:
+    get:
+      operationId: getHealth
+      summary: Actor Model Get System Health
+      description: Get the overall health status of the actor system including actor count, throughput, and error rates.
+      tags:
+      - Health
+      responses:
+        '200':
+          description: System health status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemHealth'
+  /health/ready:
+    get:
+      operationId: getReadiness
+      summary: Actor Model Get Readiness
+      description: Kubernetes-compatible readiness probe endpoint for the actor system.
+      tags:
+      - Health
+      responses:
+        '200':
+          description: System is ready
+        '503':
+          description: System is not ready
+components:
+  schemas:
+    SystemHealth:
+      type: object
+      description: Overall health status of the actor system
+      properties:
+        status:
+          type: string
+          enum:
+          - healthy
+          - degraded
+          - unhealthy
+          description: Overall health
+          example: healthy
+        activeActors:
+          type: integer
+          description: Total active actors
+          example: 5000
+        messagesPerSecond:
+          type: number
+          description: Current message throughput
+          example: 12500.5
+        errorRate:
+          type: number
+          description: Error rate (messages failed / total)
+          example: 0.0001
+        deadLetters:
+          type: integer
+          description: Messages sent to dead letter queue
+          example: 3
+        clusterSize:
+          type: integer
+          description: Number of cluster nodes
+          example: 5
+        uptime:
+          type: integer
+          description: System uptime in seconds
+          example: 86400
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token for actor system management API access

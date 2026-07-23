@@ -1,0 +1,223 @@
+openapi: 3.1.0
+info:
+  title: Actor Model Actors API
+  description: Reference API for actor model systems covering actor lifecycle management, message passing, supervision, clustering, and distributed state. Applicable to frameworks including Akka, Erlang/OTP, Microsoft Orleans, Pony, and Proto.Actor.
+  version: 1.0.0
+  contact:
+    name: Actor Model Reference
+    url: https://en.wikipedia.org/wiki/Actor_model
+servers:
+- url: https://api.example.com/actor-system/v1
+  description: Actor system management API
+security:
+- BearerAuth: []
+tags:
+- name: Actors
+  description: Actor lifecycle and management
+paths:
+  /actors:
+    get:
+      operationId: listActors
+      summary: Actor Model List Actors
+      description: List all active actors in the system with their current state and mailbox statistics.
+      tags:
+      - Actors
+      parameters:
+      - name: status
+        in: query
+        description: Filter by actor status (active, idle, stopped)
+        schema:
+          type: string
+          enum:
+          - active
+          - idle
+          - stopped
+      - name: limit
+        in: query
+        description: Maximum number of actors to return
+        schema:
+          type: integer
+          default: 100
+          maximum: 1000
+      - name: cursor
+        in: query
+        description: Pagination cursor for next page of results
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of actors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActorList'
+        '401':
+          description: Unauthorized
+    post:
+      operationId: spawnActor
+      summary: Actor Model Spawn Actor
+      description: Spawn a new actor with the specified behavior and optional initial state.
+      tags:
+      - Actors
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpawnActorRequest'
+      responses:
+        '201':
+          description: Actor spawned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Actor'
+        '400':
+          description: Invalid actor specification
+        '401':
+          description: Unauthorized
+  /actors/{actorId}:
+    get:
+      operationId: getActor
+      summary: Actor Model Get Actor
+      description: Retrieve details of a specific actor including its current state, mailbox size, and supervision link.
+      tags:
+      - Actors
+      parameters:
+      - name: actorId
+        in: path
+        required: true
+        description: Unique actor identifier or path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Actor details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Actor'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Actor not found
+    delete:
+      operationId: stopActor
+      summary: Actor Model Stop Actor
+      description: Send a stop signal to an actor, gracefully draining its mailbox before termination.
+      tags:
+      - Actors
+      parameters:
+      - name: actorId
+        in: path
+        required: true
+        description: Unique actor identifier or path
+        schema:
+          type: string
+      - name: graceful
+        in: query
+        description: Whether to drain mailbox before stopping
+        schema:
+          type: boolean
+          default: true
+      responses:
+        '204':
+          description: Actor stop signal sent
+        '401':
+          description: Unauthorized
+        '404':
+          description: Actor not found
+components:
+  schemas:
+    Actor:
+      type: object
+      description: An actor in the system with its current state and mailbox info
+      properties:
+        id:
+          type: string
+          description: Unique actor identifier
+          example: user-123
+        path:
+          type: string
+          description: Hierarchical actor path
+          example: /user/supervisor/worker-1
+        behavior:
+          type: string
+          description: Current behavior class or name
+          example: UserSessionBehavior
+        status:
+          type: string
+          enum:
+          - active
+          - idle
+          - stopping
+          - stopped
+          description: Current actor status
+          example: active
+        mailboxSize:
+          type: integer
+          description: Number of pending messages in mailbox
+          example: 3
+        supervisorId:
+          type: string
+          description: Parent supervisor actor ID
+          example: supervisor-pool-1
+        spawnedAt:
+          type: string
+          format: date-time
+          description: When the actor was spawned
+        lastMessageAt:
+          type: string
+          format: date-time
+          description: Timestamp of last processed message
+        messageCount:
+          type: integer
+          description: Total messages processed since spawn
+          example: 1024
+        restartCount:
+          type: integer
+          description: Number of times this actor has been restarted
+          example: 0
+    SpawnActorRequest:
+      type: object
+      description: Request to spawn a new actor
+      required:
+      - behavior
+      properties:
+        behavior:
+          type: string
+          description: Behavior class or type name
+          example: UserSessionBehavior
+        id:
+          type: string
+          description: Optional custom actor ID (auto-generated if omitted)
+          example: session-abc
+        supervisorId:
+          type: string
+          description: Parent supervisor ID
+          example: session-supervisor
+        initialState:
+          type: object
+          description: Initial state to inject into the actor
+          additionalProperties: true
+    ActorList:
+      type: object
+      description: Paginated list of actors
+      properties:
+        actors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Actor'
+        total:
+          type: integer
+          description: Total actor count
+          example: 500
+        cursor:
+          type: string
+          description: Cursor for next page
+          example: eyJwYWdlIjoxfQ==
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token for actor system management API access

@@ -1,0 +1,134 @@
+openapi: 3.1.0
+info:
+  title: Actor Model Actors Mailboxes API
+  description: Reference API for actor model systems covering actor lifecycle management, message passing, supervision, clustering, and distributed state. Applicable to frameworks including Akka, Erlang/OTP, Microsoft Orleans, Pony, and Proto.Actor.
+  version: 1.0.0
+  contact:
+    name: Actor Model Reference
+    url: https://en.wikipedia.org/wiki/Actor_model
+servers:
+- url: https://api.example.com/actor-system/v1
+  description: Actor system management API
+security:
+- BearerAuth: []
+tags:
+- name: Mailboxes
+  description: Message queue inspection
+paths:
+  /actors/{actorId}/messages:
+    post:
+      operationId: sendMessage
+      summary: Actor Model Send Message
+      description: Send a message to an actor's mailbox for asynchronous processing.
+      tags:
+      - Mailboxes
+      parameters:
+      - name: actorId
+        in: path
+        required: true
+        description: Target actor identifier
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActorMessage'
+      responses:
+        '202':
+          description: Message accepted for delivery
+        '401':
+          description: Unauthorized
+        '404':
+          description: Actor not found
+        '429':
+          description: Mailbox full — back pressure applied
+    get:
+      operationId: inspectMailbox
+      summary: Actor Model Inspect Mailbox
+      description: Inspect pending messages in an actor's mailbox without consuming them. Useful for debugging.
+      tags:
+      - Mailboxes
+      parameters:
+      - name: actorId
+        in: path
+        required: true
+        description: Target actor identifier
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Number of pending messages to inspect
+        schema:
+          type: integer
+          default: 10
+      responses:
+        '200':
+          description: Mailbox inspection result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MailboxInspection'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Actor not found
+components:
+  schemas:
+    ActorMessage:
+      type: object
+      description: A message to be placed in an actor's mailbox
+      required:
+      - type
+      - payload
+      properties:
+        type:
+          type: string
+          description: Message type discriminator
+          example: UpdateProfile
+        payload:
+          type: object
+          description: Message payload
+          additionalProperties: true
+        replyTo:
+          type: string
+          description: Actor ID to send reply to (optional)
+          example: caller-actor-456
+        correlationId:
+          type: string
+          description: Correlation ID for tracing
+          example: trace-xyz-789
+        priority:
+          type: string
+          enum:
+          - high
+          - normal
+          - low
+          description: Message priority in mailbox
+          example: normal
+    MailboxInspection:
+      type: object
+      description: Inspection of pending messages in an actor's mailbox
+      properties:
+        actorId:
+          type: string
+          description: Actor identifier
+          example: user-123
+        pendingCount:
+          type: integer
+          description: Total pending messages
+          example: 5
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActorMessage'
+        oldestMessageAge:
+          type: integer
+          description: Age of oldest message in milliseconds
+          example: 350
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token for actor system management API access

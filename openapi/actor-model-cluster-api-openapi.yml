@@ -1,0 +1,161 @@
+openapi: 3.1.0
+info:
+  title: Actor Model Actors Cluster API
+  description: Reference API for actor model systems covering actor lifecycle management, message passing, supervision, clustering, and distributed state. Applicable to frameworks including Akka, Erlang/OTP, Microsoft Orleans, Pony, and Proto.Actor.
+  version: 1.0.0
+  contact:
+    name: Actor Model Reference
+    url: https://en.wikipedia.org/wiki/Actor_model
+servers:
+- url: https://api.example.com/actor-system/v1
+  description: Actor system management API
+security:
+- BearerAuth: []
+tags:
+- name: Cluster
+  description: Cluster membership and sharding
+paths:
+  /cluster/members:
+    get:
+      operationId: listClusterMembers
+      summary: Actor Model List Cluster Members
+      description: List all nodes in the actor system cluster with their status and roles.
+      tags:
+      - Cluster
+      parameters:
+      - name: status
+        in: query
+        description: Filter by member status (up, joining, leaving, down)
+        schema:
+          type: string
+          enum:
+          - up
+          - joining
+          - leaving
+          - down
+      responses:
+        '200':
+          description: Cluster member list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterMemberList'
+        '401':
+          description: Unauthorized
+  /cluster/shards:
+    get:
+      operationId: listShards
+      summary: Actor Model List Cluster Shards
+      description: List all shards in the cluster with their location and actor count.
+      tags:
+      - Cluster
+      responses:
+        '200':
+          description: Shard list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShardList'
+        '401':
+          description: Unauthorized
+components:
+  schemas:
+    ClusterMemberList:
+      type: object
+      description: List of cluster members
+      properties:
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterMember'
+        leader:
+          type: string
+          description: Current cluster leader node ID
+          example: akka://system@10.0.0.1:2551
+        totalActors:
+          type: integer
+          description: Total actors across all cluster members
+          example: 5000
+    ClusterMember:
+      type: object
+      description: A node in the actor system cluster
+      properties:
+        nodeId:
+          type: string
+          description: Unique node identifier
+          example: akka://system@10.0.0.1:2551
+        address:
+          type: string
+          description: Network address
+          example: 10.0.0.1:2551
+        status:
+          type: string
+          enum:
+          - up
+          - joining
+          - leaving
+          - down
+          - removed
+          description: Member status
+          example: up
+        roles:
+          type: array
+          items:
+            type: string
+          description: Node roles
+          example:
+          - worker
+          - seed
+        upSince:
+          type: string
+          format: date-time
+          description: When node joined the cluster
+        actorCount:
+          type: integer
+          description: Number of actors hosted on this node
+          example: 1200
+    ShardList:
+      type: object
+      description: List of cluster shards
+      properties:
+        shards:
+          type: array
+          items:
+            $ref: '#/components/schemas/Shard'
+        totalShards:
+          type: integer
+          description: Total shard count
+          example: 100
+        totalEntities:
+          type: integer
+          description: Total entities across all shards
+          example: 15000
+    Shard:
+      type: object
+      description: A shard partition in the cluster
+      properties:
+        shardId:
+          type: string
+          description: Shard identifier
+          example: shard-42
+        region:
+          type: string
+          description: Shard region name
+          example: UserRegion
+        nodeId:
+          type: string
+          description: Node hosting this shard
+          example: akka://system@10.0.0.2:2551
+        entityCount:
+          type: integer
+          description: Number of entities in this shard
+          example: 150
+        status:
+          type: string
+          description: Shard status
+          example: active
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token for actor system management API access
