@@ -3,7 +3,20 @@ url: https://raw.githubusercontent.com/api-evangelist/actor-model/refs/heads/mai
 name: Actor Model
 kind: topic
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/actor-model.png
 tags:
   - Actor Model
   - Concurrency
@@ -17,31 +30,96 @@ created: '2025-01-01'
 modified: '2026-05-19'
 specificationVersion: '0.19'
 apis:
-  - aid: actor-model:actor-model-api
-    name: Actor Model API
-    tags:
-      - Actor Model
-      - Concurrency
-      - Distributed Systems
-      - Supervision
-      - Cluster
-    properties:
-      - type: HumanURL
-        url: https://en.wikipedia.org/wiki/Actor_model
-      - type: BaseURL
-        url: https://api.example.com/actor-system/v1
-      - type: OpenAPI
-        url: openapi/actor-model.json
-      - type: JSONSchema
-        url: json-schema/
-      - type: JSONStructure
-        url: json-structure/
-      - type: Examples
-        url: examples/
-    description: >-
-      Reference API for actor lifecycle management, message passing, supervision hierarchies, cluster membership, and
-      system health in actor model systems. Applicable to frameworks including Akka, Erlang/OTP, Microsoft Orleans, and
-      Proto.Actor.
+- aid: actor-model:actor-model-actors-api
+  name: Actor Model Actors API
+  description: Actor lifecycle and management
+  tags:
+  - Actors
+  properties:
+  - type: OpenAPI
+    url: openapi/actor-model-actors-api-openapi.yml
+  - type: HumanURL
+    url: https://en.wikipedia.org/wiki/Actor_model
+  - type: BaseURL
+    url: https://api.example.com/actor-system/v1
+  - type: JSONSchema
+    url: json-schema/
+  - type: JSONStructure
+    url: json-structure/
+  - type: Examples
+    url: examples/
+- aid: actor-model:actor-model-cluster-api
+  name: Actor Model Cluster API
+  description: Cluster membership and sharding
+  tags:
+  - Cluster
+  properties:
+  - type: OpenAPI
+    url: openapi/actor-model-cluster-api-openapi.yml
+  - type: HumanURL
+    url: https://en.wikipedia.org/wiki/Actor_model
+  - type: BaseURL
+    url: https://api.example.com/actor-system/v1
+  - type: JSONSchema
+    url: json-schema/
+  - type: JSONStructure
+    url: json-structure/
+  - type: Examples
+    url: examples/
+- aid: actor-model:actor-model-health-api
+  name: Actor Model Health API
+  description: System health and diagnostics
+  tags:
+  - Health
+  properties:
+  - type: OpenAPI
+    url: openapi/actor-model-health-api-openapi.yml
+  - type: HumanURL
+    url: https://en.wikipedia.org/wiki/Actor_model
+  - type: BaseURL
+    url: https://api.example.com/actor-system/v1
+  - type: JSONSchema
+    url: json-schema/
+  - type: JSONStructure
+    url: json-structure/
+  - type: Examples
+    url: examples/
+- aid: actor-model:actor-model-mailboxes-api
+  name: Actor Model Mailboxes API
+  description: Message queue inspection
+  tags:
+  - Mailboxes
+  properties:
+  - type: OpenAPI
+    url: openapi/actor-model-mailboxes-api-openapi.yml
+  - type: HumanURL
+    url: https://en.wikipedia.org/wiki/Actor_model
+  - type: BaseURL
+    url: https://api.example.com/actor-system/v1
+  - type: JSONSchema
+    url: json-schema/
+  - type: JSONStructure
+    url: json-structure/
+  - type: Examples
+    url: examples/
+- aid: actor-model:actor-model-supervisors-api
+  name: Actor Model Supervisors API
+  description: Supervision hierarchy
+  tags:
+  - Supervisors
+  properties:
+  - type: OpenAPI
+    url: openapi/actor-model-supervisors-api-openapi.yml
+  - type: HumanURL
+    url: https://en.wikipedia.org/wiki/Actor_model
+  - type: BaseURL
+    url: https://api.example.com/actor-system/v1
+  - type: JSONSchema
+    url: json-schema/
+  - type: JSONStructure
+    url: json-structure/
+  - type: Examples
+    url: examples/
 common:
   - type: AgenticAccess
     url: agentic-access/actor-model-agentic-access.yml
