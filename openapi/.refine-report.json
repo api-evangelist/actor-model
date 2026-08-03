@@ -1,0 +1,22 @@
+{
+  "provider": "actor-model",
+  "sources": [
+    "actor-model-actors-api-openapi.yml",
+    "actor-model-cluster-api-openapi.yml",
+    "actor-model-health-api-openapi.yml",
+    "actor-model-mailboxes-api-openapi.yml",
+    "actor-model-supervisors-api-openapi.yml"
+  ],
+  "outputs": [
+    "actor-model-actors-api-openapi.yml",
+    "actor-model-cluster-api-openapi.yml",
+    "actor-model-health-api-openapi.yml",
+    "actor-model-mailboxes-api-openapi.yml",
+    "actor-model-supervisors-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

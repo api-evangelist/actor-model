@@ -1,0 +1,526 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Actor Model API",
+    "description": "Reference API for actor model systems covering actor lifecycle management, message passing, supervision, clustering, and distributed state. Applicable to frameworks including Akka, Erlang/OTP, Microsoft Orleans, Pony, and Proto.Actor.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Actor Model Reference",
+      "url": "https://en.wikipedia.org/wiki/Actor_model"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.example.com/actor-system/v1",
+      "description": "Actor system management API"
+    }
+  ],
+  "tags": [
+    {"name": "Actors", "description": "Actor lifecycle and management"},
+    {"name": "Mailboxes", "description": "Message queue inspection"},
+    {"name": "Supervisors", "description": "Supervision hierarchy"},
+    {"name": "Cluster", "description": "Cluster membership and sharding"},
+    {"name": "Health", "description": "System health and diagnostics"}
+  ],
+  "paths": {
+    "/actors": {
+      "get": {
+        "operationId": "listActors",
+        "summary": "Actor Model List Actors",
+        "description": "List all active actors in the system with their current state and mailbox statistics.",
+        "tags": ["Actors"],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Filter by actor status (active, idle, stopped)",
+            "schema": {"type": "string", "enum": ["active", "idle", "stopped"]}
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of actors to return",
+            "schema": {"type": "integer", "default": 100, "maximum": 1000}
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "Pagination cursor for next page of results",
+            "schema": {"type": "string"}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of actors",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ActorList"}
+              }
+            }
+          },
+          "401": {"description": "Unauthorized"}
+        }
+      },
+      "post": {
+        "operationId": "spawnActor",
+        "summary": "Actor Model Spawn Actor",
+        "description": "Spawn a new actor with the specified behavior and optional initial state.",
+        "tags": ["Actors"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {"$ref": "#/components/schemas/SpawnActorRequest"}
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Actor spawned successfully",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/Actor"}
+              }
+            }
+          },
+          "400": {"description": "Invalid actor specification"},
+          "401": {"description": "Unauthorized"}
+        }
+      }
+    },
+    "/actors/{actorId}": {
+      "get": {
+        "operationId": "getActor",
+        "summary": "Actor Model Get Actor",
+        "description": "Retrieve details of a specific actor including its current state, mailbox size, and supervision link.",
+        "tags": ["Actors"],
+        "parameters": [
+          {
+            "name": "actorId",
+            "in": "path",
+            "required": true,
+            "description": "Unique actor identifier or path",
+            "schema": {"type": "string"}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Actor details",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/Actor"}
+              }
+            }
+          },
+          "401": {"description": "Unauthorized"},
+          "404": {"description": "Actor not found"}
+        }
+      },
+      "delete": {
+        "operationId": "stopActor",
+        "summary": "Actor Model Stop Actor",
+        "description": "Send a stop signal to an actor, gracefully draining its mailbox before termination.",
+        "tags": ["Actors"],
+        "parameters": [
+          {
+            "name": "actorId",
+            "in": "path",
+            "required": true,
+            "description": "Unique actor identifier or path",
+            "schema": {"type": "string"}
+          },
+          {
+            "name": "graceful",
+            "in": "query",
+            "description": "Whether to drain mailbox before stopping",
+            "schema": {"type": "boolean", "default": true}
+          }
+        ],
+        "responses": {
+          "204": {"description": "Actor stop signal sent"},
+          "401": {"description": "Unauthorized"},
+          "404": {"description": "Actor not found"}
+        }
+      }
+    },
+    "/actors/{actorId}/messages": {
+      "post": {
+        "operationId": "sendMessage",
+        "summary": "Actor Model Send Message",
+        "description": "Send a message to an actor's mailbox for asynchronous processing.",
+        "tags": ["Mailboxes"],
+        "parameters": [
+          {
+            "name": "actorId",
+            "in": "path",
+            "required": true,
+            "description": "Target actor identifier",
+            "schema": {"type": "string"}
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {"$ref": "#/components/schemas/ActorMessage"}
+            }
+          }
+        },
+        "responses": {
+          "202": {"description": "Message accepted for delivery"},
+          "401": {"description": "Unauthorized"},
+          "404": {"description": "Actor not found"},
+          "429": {"description": "Mailbox full — back pressure applied"}
+        }
+      },
+      "get": {
+        "operationId": "inspectMailbox",
+        "summary": "Actor Model Inspect Mailbox",
+        "description": "Inspect pending messages in an actor's mailbox without consuming them. Useful for debugging.",
+        "tags": ["Mailboxes"],
+        "parameters": [
+          {
+            "name": "actorId",
+            "in": "path",
+            "required": true,
+            "description": "Target actor identifier",
+            "schema": {"type": "string"}
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of pending messages to inspect",
+            "schema": {"type": "integer", "default": 10}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Mailbox inspection result",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/MailboxInspection"}
+              }
+            }
+          },
+          "401": {"description": "Unauthorized"},
+          "404": {"description": "Actor not found"}
+        }
+      }
+    },
+    "/supervisors": {
+      "get": {
+        "operationId": "listSupervisors",
+        "summary": "Actor Model List Supervisors",
+        "description": "List all supervisor actors with their child counts and supervision strategies.",
+        "tags": ["Supervisors"],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of supervisors to return",
+            "schema": {"type": "integer", "default": 50}
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "Pagination cursor",
+            "schema": {"type": "string"}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of supervisors",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/SupervisorList"}
+              }
+            }
+          },
+          "401": {"description": "Unauthorized"}
+        }
+      }
+    },
+    "/supervisors/{supervisorId}": {
+      "get": {
+        "operationId": "getSupervisor",
+        "summary": "Actor Model Get Supervisor",
+        "description": "Retrieve the supervision tree and strategy for a specific supervisor actor.",
+        "tags": ["Supervisors"],
+        "parameters": [
+          {
+            "name": "supervisorId",
+            "in": "path",
+            "required": true,
+            "description": "Supervisor actor identifier",
+            "schema": {"type": "string"}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Supervisor details",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/Supervisor"}
+              }
+            }
+          },
+          "401": {"description": "Unauthorized"},
+          "404": {"description": "Supervisor not found"}
+        }
+      }
+    },
+    "/supervisors/{supervisorId}/children": {
+      "get": {
+        "operationId": "listChildren",
+        "summary": "Actor Model List Supervisor Children",
+        "description": "List all child actors currently under a supervisor's watch.",
+        "tags": ["Supervisors"],
+        "parameters": [
+          {
+            "name": "supervisorId",
+            "in": "path",
+            "required": true,
+            "description": "Supervisor actor identifier",
+            "schema": {"type": "string"}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of child actors",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ActorList"}
+              }
+            }
+          },
+          "401": {"description": "Unauthorized"},
+          "404": {"description": "Supervisor not found"}
+        }
+      }
+    },
+    "/cluster/members": {
+      "get": {
+        "operationId": "listClusterMembers",
+        "summary": "Actor Model List Cluster Members",
+        "description": "List all nodes in the actor system cluster with their status and roles.",
+        "tags": ["Cluster"],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Filter by member status (up, joining, leaving, down)",
+            "schema": {"type": "string", "enum": ["up", "joining", "leaving", "down"]}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cluster member list",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ClusterMemberList"}
+              }
+            }
+          },
+          "401": {"description": "Unauthorized"}
+        }
+      }
+    },
+    "/cluster/shards": {
+      "get": {
+        "operationId": "listShards",
+        "summary": "Actor Model List Cluster Shards",
+        "description": "List all shards in the cluster with their location and actor count.",
+        "tags": ["Cluster"],
+        "responses": {
+          "200": {
+            "description": "Shard list",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/ShardList"}
+              }
+            }
+          },
+          "401": {"description": "Unauthorized"}
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "operationId": "getHealth",
+        "summary": "Actor Model Get System Health",
+        "description": "Get the overall health status of the actor system including actor count, throughput, and error rates.",
+        "tags": ["Health"],
+        "responses": {
+          "200": {
+            "description": "System health status",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/SystemHealth"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health/ready": {
+      "get": {
+        "operationId": "getReadiness",
+        "summary": "Actor Model Get Readiness",
+        "description": "Kubernetes-compatible readiness probe endpoint for the actor system.",
+        "tags": ["Health"],
+        "responses": {
+          "200": {"description": "System is ready"},
+          "503": {"description": "System is not ready"}
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Bearer token for actor system management API access"
+      }
+    },
+    "schemas": {
+      "Actor": {
+        "type": "object",
+        "description": "An actor in the system with its current state and mailbox info",
+        "properties": {
+          "id": {"type": "string", "description": "Unique actor identifier", "example": "user-123"},
+          "path": {"type": "string", "description": "Hierarchical actor path", "example": "/user/supervisor/worker-1"},
+          "behavior": {"type": "string", "description": "Current behavior class or name", "example": "UserSessionBehavior"},
+          "status": {"type": "string", "enum": ["active", "idle", "stopping", "stopped"], "description": "Current actor status", "example": "active"},
+          "mailboxSize": {"type": "integer", "description": "Number of pending messages in mailbox", "example": 3},
+          "supervisorId": {"type": "string", "description": "Parent supervisor actor ID", "example": "supervisor-pool-1"},
+          "spawnedAt": {"type": "string", "format": "date-time", "description": "When the actor was spawned"},
+          "lastMessageAt": {"type": "string", "format": "date-time", "description": "Timestamp of last processed message"},
+          "messageCount": {"type": "integer", "description": "Total messages processed since spawn", "example": 1024},
+          "restartCount": {"type": "integer", "description": "Number of times this actor has been restarted", "example": 0}
+        }
+      },
+      "ActorList": {
+        "type": "object",
+        "description": "Paginated list of actors",
+        "properties": {
+          "actors": {"type": "array", "items": {"$ref": "#/components/schemas/Actor"}},
+          "total": {"type": "integer", "description": "Total actor count", "example": 500},
+          "cursor": {"type": "string", "description": "Cursor for next page", "example": "eyJwYWdlIjoxfQ=="}
+        }
+      },
+      "SpawnActorRequest": {
+        "type": "object",
+        "description": "Request to spawn a new actor",
+        "required": ["behavior"],
+        "properties": {
+          "behavior": {"type": "string", "description": "Behavior class or type name", "example": "UserSessionBehavior"},
+          "id": {"type": "string", "description": "Optional custom actor ID (auto-generated if omitted)", "example": "session-abc"},
+          "supervisorId": {"type": "string", "description": "Parent supervisor ID", "example": "session-supervisor"},
+          "initialState": {"type": "object", "description": "Initial state to inject into the actor", "additionalProperties": true}
+        }
+      },
+      "ActorMessage": {
+        "type": "object",
+        "description": "A message to be placed in an actor's mailbox",
+        "required": ["type", "payload"],
+        "properties": {
+          "type": {"type": "string", "description": "Message type discriminator", "example": "UpdateProfile"},
+          "payload": {"type": "object", "description": "Message payload", "additionalProperties": true},
+          "replyTo": {"type": "string", "description": "Actor ID to send reply to (optional)", "example": "caller-actor-456"},
+          "correlationId": {"type": "string", "description": "Correlation ID for tracing", "example": "trace-xyz-789"},
+          "priority": {"type": "string", "enum": ["high", "normal", "low"], "description": "Message priority in mailbox", "example": "normal"}
+        }
+      },
+      "MailboxInspection": {
+        "type": "object",
+        "description": "Inspection of pending messages in an actor's mailbox",
+        "properties": {
+          "actorId": {"type": "string", "description": "Actor identifier", "example": "user-123"},
+          "pendingCount": {"type": "integer", "description": "Total pending messages", "example": 5},
+          "messages": {"type": "array", "items": {"$ref": "#/components/schemas/ActorMessage"}},
+          "oldestMessageAge": {"type": "integer", "description": "Age of oldest message in milliseconds", "example": 350}
+        }
+      },
+      "Supervisor": {
+        "type": "object",
+        "description": "A supervisor actor managing a set of child actors",
+        "properties": {
+          "id": {"type": "string", "description": "Supervisor actor ID", "example": "session-supervisor"},
+          "path": {"type": "string", "description": "Actor path", "example": "/system/supervisor/session-supervisor"},
+          "strategy": {"type": "string", "enum": ["one-for-one", "one-for-all", "rest-for-one", "all-for-one"], "description": "Supervision strategy", "example": "one-for-one"},
+          "maxRestarts": {"type": "integer", "description": "Maximum restart attempts within window", "example": 10},
+          "restartWindow": {"type": "integer", "description": "Restart window in seconds", "example": 60},
+          "childCount": {"type": "integer", "description": "Current number of supervised children", "example": 42},
+          "status": {"type": "string", "description": "Supervisor status", "example": "active"}
+        }
+      },
+      "SupervisorList": {
+        "type": "object",
+        "description": "Paginated list of supervisors",
+        "properties": {
+          "supervisors": {"type": "array", "items": {"$ref": "#/components/schemas/Supervisor"}},
+          "total": {"type": "integer", "description": "Total supervisor count", "example": 12},
+          "cursor": {"type": "string", "description": "Cursor for next page"}
+        }
+      },
+      "ClusterMember": {
+        "type": "object",
+        "description": "A node in the actor system cluster",
+        "properties": {
+          "nodeId": {"type": "string", "description": "Unique node identifier", "example": "akka://system@10.0.0.1:2551"},
+          "address": {"type": "string", "description": "Network address", "example": "10.0.0.1:2551"},
+          "status": {"type": "string", "enum": ["up", "joining", "leaving", "down", "removed"], "description": "Member status", "example": "up"},
+          "roles": {"type": "array", "items": {"type": "string"}, "description": "Node roles", "example": ["worker", "seed"]},
+          "upSince": {"type": "string", "format": "date-time", "description": "When node joined the cluster"},
+          "actorCount": {"type": "integer", "description": "Number of actors hosted on this node", "example": 1200}
+        }
+      },
+      "ClusterMemberList": {
+        "type": "object",
+        "description": "List of cluster members",
+        "properties": {
+          "members": {"type": "array", "items": {"$ref": "#/components/schemas/ClusterMember"}},
+          "leader": {"type": "string", "description": "Current cluster leader node ID", "example": "akka://system@10.0.0.1:2551"},
+          "totalActors": {"type": "integer", "description": "Total actors across all cluster members", "example": 5000}
+        }
+      },
+      "Shard": {
+        "type": "object",
+        "description": "A shard partition in the cluster",
+        "properties": {
+          "shardId": {"type": "string", "description": "Shard identifier", "example": "shard-42"},
+          "region": {"type": "string", "description": "Shard region name", "example": "UserRegion"},
+          "nodeId": {"type": "string", "description": "Node hosting this shard", "example": "akka://system@10.0.0.2:2551"},
+          "entityCount": {"type": "integer", "description": "Number of entities in this shard", "example": 150},
+          "status": {"type": "string", "description": "Shard status", "example": "active"}
+        }
+      },
+      "ShardList": {
+        "type": "object",
+        "description": "List of cluster shards",
+        "properties": {
+          "shards": {"type": "array", "items": {"$ref": "#/components/schemas/Shard"}},
+          "totalShards": {"type": "integer", "description": "Total shard count", "example": 100},
+          "totalEntities": {"type": "integer", "description": "Total entities across all shards", "example": 15000}
+        }
+      },
+      "SystemHealth": {
+        "type": "object",
+        "description": "Overall health status of the actor system",
+        "properties": {
+          "status": {"type": "string", "enum": ["healthy", "degraded", "unhealthy"], "description": "Overall health", "example": "healthy"},
+          "activeActors": {"type": "integer", "description": "Total active actors", "example": 5000},
+          "messagesPerSecond": {"type": "number", "description": "Current message throughput", "example": 12500.5},
+          "errorRate": {"type": "number", "description": "Error rate (messages failed / total)", "example": 0.0001},
+          "deadLetters": {"type": "integer", "description": "Messages sent to dead letter queue", "example": 3},
+          "clusterSize": {"type": "integer", "description": "Number of cluster nodes", "example": 5},
+          "uptime": {"type": "integer", "description": "System uptime in seconds", "example": 86400}
+        }
+      }
+    }
+  },
+  "security": [
+    {"BearerAuth": []}
+  ]
+}
