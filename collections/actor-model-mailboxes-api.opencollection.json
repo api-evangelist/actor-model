@@ -1,0 +1,72 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Actor Model Actors Mailboxes API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Mailboxes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Actor Model Inspect Mailbox",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.example.com/actor-system/v1/actors/:actorId/messages",
+            "params": [
+              {
+                "name": "actorId",
+                "value": "",
+                "type": "path",
+                "description": "Target actor identifier"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of pending messages to inspect"
+              }
+            ]
+          },
+          "docs": "Inspect pending messages in an actor's mailbox without consuming them. Useful for debugging."
+        },
+        {
+          "info": {
+            "name": "Actor Model Send Message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.example.com/actor-system/v1/actors/:actorId/messages",
+            "params": [
+              {
+                "name": "actorId",
+                "value": "",
+                "type": "path",
+                "description": "Target actor identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a message to an actor's mailbox for asynchronous processing."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

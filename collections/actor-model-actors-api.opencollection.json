@@ -1,0 +1,114 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Actor Model Actors API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Actors",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Actor Model List Actors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.example.com/actor-system/v1/actors",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by actor status (active, idle, stopped)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of actors to return"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor for next page of results"
+              }
+            ]
+          },
+          "docs": "List all active actors in the system with their current state and mailbox statistics."
+        },
+        {
+          "info": {
+            "name": "Actor Model Spawn Actor",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.example.com/actor-system/v1/actors",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Spawn a new actor with the specified behavior and optional initial state."
+        },
+        {
+          "info": {
+            "name": "Actor Model Get Actor",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.example.com/actor-system/v1/actors/:actorId",
+            "params": [
+              {
+                "name": "actorId",
+                "value": "",
+                "type": "path",
+                "description": "Unique actor identifier or path"
+              }
+            ]
+          },
+          "docs": "Retrieve details of a specific actor including its current state, mailbox size, and supervision link."
+        },
+        {
+          "info": {
+            "name": "Actor Model Stop Actor",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.example.com/actor-system/v1/actors/:actorId",
+            "params": [
+              {
+                "name": "actorId",
+                "value": "",
+                "type": "path",
+                "description": "Unique actor identifier or path"
+              },
+              {
+                "name": "graceful",
+                "value": "",
+                "type": "query",
+                "description": "Whether to drain mailbox before stopping"
+              }
+            ]
+          },
+          "docs": "Send a stop signal to an actor, gracefully draining its mailbox before termination."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

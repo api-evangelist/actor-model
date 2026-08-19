@@ -1,0 +1,54 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Actor Model Actors Cluster API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Cluster",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Actor Model List Cluster Members",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.example.com/actor-system/v1/cluster/members",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by member status (up, joining, leaving, down)"
+              }
+            ]
+          },
+          "docs": "List all nodes in the actor system cluster with their status and roles."
+        },
+        {
+          "info": {
+            "name": "Actor Model List Cluster Shards",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.example.com/actor-system/v1/cluster/shards"
+          },
+          "docs": "List all shards in the cluster with their location and actor count."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

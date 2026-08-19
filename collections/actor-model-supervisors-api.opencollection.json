@@ -1,0 +1,87 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Actor Model Actors Supervisors API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Supervisors",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Actor Model List Supervisors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.example.com/actor-system/v1/supervisors",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of supervisors to return"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor"
+              }
+            ]
+          },
+          "docs": "List all supervisor actors with their child counts and supervision strategies."
+        },
+        {
+          "info": {
+            "name": "Actor Model Get Supervisor",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.example.com/actor-system/v1/supervisors/:supervisorId",
+            "params": [
+              {
+                "name": "supervisorId",
+                "value": "",
+                "type": "path",
+                "description": "Supervisor actor identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve the supervision tree and strategy for a specific supervisor actor."
+        },
+        {
+          "info": {
+            "name": "Actor Model List Supervisor Children",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.example.com/actor-system/v1/supervisors/:supervisorId/children",
+            "params": [
+              {
+                "name": "supervisorId",
+                "value": "",
+                "type": "path",
+                "description": "Supervisor actor identifier"
+              }
+            ]
+          },
+          "docs": "List all child actors currently under a supervisor's watch."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

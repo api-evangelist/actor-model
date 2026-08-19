@@ -1,0 +1,229 @@
+{
+  "item": [
+    {
+      "id": "59bb5b09-8d3b-4400-b028-2c518d0ea985",
+      "name": "Health",
+      "description": {
+        "content": "System health and diagnostics",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "dcc53ba2-1536-46e6-8ae2-8e0399c3b031",
+          "name": "Actor Model Get System Health",
+          "request": {
+            "name": "Actor Model Get System Health",
+            "description": {
+              "content": "Get the overall health status of the actor system including actor count, throughput, and error rates.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "health"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "60e1b7f2-56c6-4a04-aea1-bcab07cbfbfa",
+              "name": "System health status",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "health"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"healthy\",\n  \"activeActors\": 5000,\n  \"messagesPerSecond\": 12500.5,\n  \"errorRate\": 0.0001,\n  \"deadLetters\": 3,\n  \"clusterSize\": 5,\n  \"uptime\": 86400\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6ce10408-febe-47cf-8d1c-eae223a3a511",
+          "name": "Actor Model Get Readiness",
+          "request": {
+            "name": "Actor Model Get Readiness",
+            "description": {
+              "content": "Kubernetes-compatible readiness probe endpoint for the actor system.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "health",
+                "ready"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c91d5fde-ba45-423f-aecf-17b9be3cfd65",
+              "name": "System is ready",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "health",
+                    "ready"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "947d0a5f-4680-4e02-9933-7337ec5c0bd1",
+              "name": "System is not ready",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "health",
+                    "ready"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.example.com/actor-system/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f46ec609-60b5-42bb-bb9c-d2c4ed6efdcd",
+    "name": "Actor Model Actors Health API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Reference API for actor model systems covering actor lifecycle management, message passing, supervision, clustering, and distributed state. Applicable to frameworks including Akka, Erlang/OTP, Microsoft Orleans, Pony, and Proto.Actor.\n\nContact Support:\n Name: Actor Model Reference",
+      "type": "text/plain"
+    }
+  }
+}

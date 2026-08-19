@@ -1,0 +1,298 @@
+{
+  "item": [
+    {
+      "id": "bb6c890c-e5ca-4527-bf9b-684fc3900cdc",
+      "name": "Cluster",
+      "description": {
+        "content": "Cluster membership and sharding",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "881e1645-9a3a-4e24-9fd3-16fb1360a02c",
+          "name": "Actor Model List Cluster Members",
+          "request": {
+            "name": "Actor Model List Cluster Members",
+            "description": {
+              "content": "List all nodes in the actor system cluster with their status and roles.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "cluster",
+                "members"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by member status (up, joining, leaving, down)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "07587639-d351-459f-96bf-1ff434598e5d",
+              "name": "Cluster member list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cluster",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"members\": [\n    {\n      \"nodeId\": \"akka://system@10.0.0.1:2551\",\n      \"address\": \"10.0.0.1:2551\",\n      \"status\": \"up\",\n      \"roles\": [\n        \"worker\",\n        \"seed\"\n      ],\n      \"upSince\": \"2014-10-25T09:28:56.247Z\",\n      \"actorCount\": 1200\n    },\n    {\n      \"nodeId\": \"akka://system@10.0.0.1:2551\",\n      \"address\": \"10.0.0.1:2551\",\n      \"status\": \"up\",\n      \"roles\": [\n        \"worker\",\n        \"seed\"\n      ],\n      \"upSince\": \"1968-07-24T06:00:50.823Z\",\n      \"actorCount\": 1200\n    }\n  ],\n  \"leader\": \"akka://system@10.0.0.1:2551\",\n  \"totalActors\": 5000\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2716e901-2cb7-4c1b-ae4a-91b4adb383a0",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cluster",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "276906a5-4f93-407a-acdd-bb317f5ba755",
+          "name": "Actor Model List Cluster Shards",
+          "request": {
+            "name": "Actor Model List Cluster Shards",
+            "description": {
+              "content": "List all shards in the cluster with their location and actor count.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "cluster",
+                "shards"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "afdbb80e-c87e-4e51-aefd-8af5577f07ab",
+              "name": "Shard list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cluster",
+                    "shards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"shards\": [\n    {\n      \"shardId\": \"shard-42\",\n      \"region\": \"UserRegion\",\n      \"nodeId\": \"akka://system@10.0.0.2:2551\",\n      \"entityCount\": 150,\n      \"status\": \"active\"\n    },\n    {\n      \"shardId\": \"shard-42\",\n      \"region\": \"UserRegion\",\n      \"nodeId\": \"akka://system@10.0.0.2:2551\",\n      \"entityCount\": 150,\n      \"status\": \"active\"\n    }\n  ],\n  \"totalShards\": 100,\n  \"totalEntities\": 15000\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f495e67-86a4-47fc-93bc-906653d4cd5c",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cluster",
+                    "shards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.example.com/actor-system/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d8079885-3a0f-42c2-b77a-454dcdf915a3",
+    "name": "Actor Model Actors Cluster API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Reference API for actor model systems covering actor lifecycle management, message passing, supervision, clustering, and distributed state. Applicable to frameworks including Akka, Erlang/OTP, Microsoft Orleans, Pony, and Proto.Actor.\n\nContact Support:\n Name: Actor Model Reference",
+      "type": "text/plain"
+    }
+  }
+}

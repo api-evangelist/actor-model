@@ -1,0 +1,541 @@
+{
+  "item": [
+    {
+      "id": "98085dcd-907b-46d7-a3f7-7d0bd46ee644",
+      "name": "Mailboxes",
+      "description": {
+        "content": "Message queue inspection",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "af7382f2-4043-4d79-a03f-04ec377114d4",
+          "name": "Actor Model Send Message",
+          "request": {
+            "name": "Actor Model Send Message",
+            "description": {
+              "content": "Send a message to an actor's mailbox for asynchronous processing.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "actors",
+                ":actorId",
+                "messages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "actorId",
+                  "description": "(Required) Target actor identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"<string>\",\n  \"payload\": {\n    \"key_0\": \"string\",\n    \"key_1\": true\n  },\n  \"replyTo\": \"<string>\",\n  \"correlationId\": \"<string>\",\n  \"priority\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3cdf8180-65a2-4116-a56b-a608937cc298",
+              "name": "Message accepted for delivery",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "actors",
+                    ":actorId",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "actorId",
+                      "description": "(Required) Target actor identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"UpdateProfile\",\n  \"payload\": {\n    \"key_0\": 6579.12250475484,\n    \"key_1\": 1716.2592060625725\n  },\n  \"replyTo\": \"caller-actor-456\",\n  \"correlationId\": \"trace-xyz-789\",\n  \"priority\": \"normal\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "055e312c-f6b2-49c0-a704-24b5fd9676cf",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "actors",
+                    ":actorId",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "actorId",
+                      "description": "(Required) Target actor identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"UpdateProfile\",\n  \"payload\": {\n    \"key_0\": 6579.12250475484,\n    \"key_1\": 1716.2592060625725\n  },\n  \"replyTo\": \"caller-actor-456\",\n  \"correlationId\": \"trace-xyz-789\",\n  \"priority\": \"normal\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cba4d8a8-af8e-49e1-9b1d-dad382f63252",
+              "name": "Actor not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "actors",
+                    ":actorId",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "actorId",
+                      "description": "(Required) Target actor identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"UpdateProfile\",\n  \"payload\": {\n    \"key_0\": 6579.12250475484,\n    \"key_1\": 1716.2592060625725\n  },\n  \"replyTo\": \"caller-actor-456\",\n  \"correlationId\": \"trace-xyz-789\",\n  \"priority\": \"normal\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1890c140-43d4-41c2-bef2-f346d57ee49c",
+              "name": "Mailbox full — back pressure applied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "actors",
+                    ":actorId",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "actorId",
+                      "description": "(Required) Target actor identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"UpdateProfile\",\n  \"payload\": {\n    \"key_0\": 6579.12250475484,\n    \"key_1\": 1716.2592060625725\n  },\n  \"replyTo\": \"caller-actor-456\",\n  \"correlationId\": \"trace-xyz-789\",\n  \"priority\": \"normal\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4210a181-0f30-4c46-b2d9-92f6f407f616",
+          "name": "Actor Model Inspect Mailbox",
+          "request": {
+            "name": "Actor Model Inspect Mailbox",
+            "description": {
+              "content": "Inspect pending messages in an actor's mailbox without consuming them. Useful for debugging.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "actors",
+                ":actorId",
+                "messages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of pending messages to inspect"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "actorId",
+                  "description": "(Required) Target actor identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "76d1ec3c-1ac9-4bc5-b643-359aeb0d1e6a",
+              "name": "Mailbox inspection result",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "actors",
+                    ":actorId",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "actorId",
+                      "description": "(Required) Target actor identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"actorId\": \"user-123\",\n  \"pendingCount\": 5,\n  \"messages\": [\n    {\n      \"type\": \"UpdateProfile\",\n      \"payload\": {\n        \"key_0\": 3485.082981371177\n      },\n      \"replyTo\": \"caller-actor-456\",\n      \"correlationId\": \"trace-xyz-789\",\n      \"priority\": \"normal\"\n    },\n    {\n      \"type\": \"UpdateProfile\",\n      \"payload\": {\n        \"key_0\": true\n      },\n      \"replyTo\": \"caller-actor-456\",\n      \"correlationId\": \"trace-xyz-789\",\n      \"priority\": \"normal\"\n    }\n  ],\n  \"oldestMessageAge\": 350\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ad1b7340-98c0-449f-a558-99139244b39d",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "actors",
+                    ":actorId",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "actorId",
+                      "description": "(Required) Target actor identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "897ccae9-0704-4c8d-a2bf-a7ea10cd1fa5",
+              "name": "Actor not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "actors",
+                    ":actorId",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "actorId",
+                      "description": "(Required) Target actor identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.example.com/actor-system/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "988420da-d2ad-4f87-bb22-8bf0c76883f5",
+    "name": "Actor Model Actors Mailboxes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Reference API for actor model systems covering actor lifecycle management, message passing, supervision, clustering, and distributed state. Applicable to frameworks including Akka, Erlang/OTP, Microsoft Orleans, Pony, and Proto.Actor.\n\nContact Support:\n Name: Actor Model Reference",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Actor Model Actors Health API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Health",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Actor Model Get System Health",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.example.com/actor-system/v1/health"
+          },
+          "docs": "Get the overall health status of the actor system including actor count, throughput, and error rates."
+        },
+        {
+          "info": {
+            "name": "Actor Model Get Readiness",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.example.com/actor-system/v1/health/ready"
+          },
+          "docs": "Kubernetes-compatible readiness probe endpoint for the actor system."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
