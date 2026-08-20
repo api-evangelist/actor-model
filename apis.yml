@@ -176,6 +176,8 @@ useCases:
   - name: Distributed Platform Operations
     description: Operate and observe distributed actor-based platforms with real-time actor and cluster data.
     tags:
+      - Platform
+    tags_raw:
       - Operations
       - Platform
   - name: Fault Tolerance Debugging
@@ -186,6 +188,9 @@ useCases:
   - name: AI-Assisted Actor Management
     description: Use MCP-exposed tools to give AI assistants visibility into actor system state for incident response.
     tags:
+      - Artificial Intelligence
+      - MCP
+    tags_raw:
       - AI
       - MCP
   - name: Concurrency Education
