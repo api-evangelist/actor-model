@@ -159,21 +159,24 @@ artifacts:
   json-structure/actor-model-system-health-structure.json:
     method: unknown
     evidence: no authorship recorded
+  openapi/_original/actor-model.json:
+    method: harvested
+    evidence: fetched from the provider as-is; byte-identical to the source
   openapi/actor-model-actors-api-openapi.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/actor-model-cluster-api-openapi.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/actor-model-health-api-openapi.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/actor-model-mailboxes-api-openapi.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/actor-model-supervisors-api-openapi.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   plans/actor-model-plans-pricing.yml:
     method: generated
     evidence: declared in the artifact

@@ -1,11 +1,7 @@
 {
   "provider": "actor-model",
   "sources": [
-    "actor-model-actors-api-openapi.yml",
-    "actor-model-cluster-api-openapi.yml",
-    "actor-model-health-api-openapi.yml",
-    "actor-model-mailboxes-api-openapi.yml",
-    "actor-model-supervisors-api-openapi.yml"
+    "_original/actor-model.json"
   ],
   "outputs": [
     "actor-model-actors-api-openapi.yml",
@@ -17,6 +13,16 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "actor-model.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "actor-model-actors-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "actor-model-cluster-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "actor-model-health-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "actor-model-mailboxes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "actor-model-supervisors-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
