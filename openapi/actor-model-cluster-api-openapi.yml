@@ -60,22 +60,6 @@ paths:
           description: Unauthorized
 components:
   schemas:
-    ClusterMemberList:
-      type: object
-      description: List of cluster members
-      properties:
-        members:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClusterMember'
-        leader:
-          type: string
-          description: Current cluster leader node ID
-          example: akka://system@10.0.0.1:2551
-        totalActors:
-          type: integer
-          description: Total actors across all cluster members
-          example: 5000
     ShardList:
       type: object
       description: List of cluster shards
@@ -92,30 +76,22 @@ components:
           type: integer
           description: Total entities across all shards
           example: 15000
-    Shard:
+    ClusterMemberList:
       type: object
-      description: A shard partition in the cluster
+      description: List of cluster members
       properties:
-        shardId:
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterMember'
+        leader:
           type: string
-          description: Shard identifier
-          example: shard-42
-        region:
-          type: string
-          description: Shard region name
-          example: UserRegion
-        nodeId:
-          type: string
-          description: Node hosting this shard
-          example: akka://system@10.0.0.2:2551
-        entityCount:
+          description: Current cluster leader node ID
+          example: akka://system@10.0.0.1:2551
+        totalActors:
           type: integer
-          description: Number of entities in this shard
-          example: 150
-        status:
-          type: string
-          description: Shard status
-          example: active
+          description: Total actors across all cluster members
+          example: 5000
     ClusterMember:
       type: object
       description: A node in the actor system cluster
@@ -154,6 +130,30 @@ components:
           type: integer
           description: Number of actors hosted on this node
           example: 1200
+    Shard:
+      type: object
+      description: A shard partition in the cluster
+      properties:
+        shardId:
+          type: string
+          description: Shard identifier
+          example: shard-42
+        region:
+          type: string
+          description: Shard region name
+          example: UserRegion
+        nodeId:
+          type: string
+          description: Node hosting this shard
+          example: akka://system@10.0.0.2:2551
+        entityCount:
+          type: integer
+          description: Number of entities in this shard
+          example: 150
+        status:
+          type: string
+          description: Shard status
+          example: active
   securitySchemes:
     BearerAuth:
       type: http

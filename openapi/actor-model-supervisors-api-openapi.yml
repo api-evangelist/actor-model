@@ -95,37 +95,6 @@ paths:
           description: Supervisor not found
 components:
   schemas:
-    ActorList:
-      type: object
-      description: Paginated list of actors
-      properties:
-        actors:
-          type: array
-          items:
-            $ref: '#/components/schemas/Actor'
-        total:
-          type: integer
-          description: Total actor count
-          example: 500
-        cursor:
-          type: string
-          description: Cursor for next page
-          example: eyJwYWdlIjoxfQ==
-    SupervisorList:
-      type: object
-      description: Paginated list of supervisors
-      properties:
-        supervisors:
-          type: array
-          items:
-            $ref: '#/components/schemas/Supervisor'
-        total:
-          type: integer
-          description: Total supervisor count
-          example: 12
-        cursor:
-          type: string
-          description: Cursor for next page
     Actor:
       type: object
       description: An actor in the system with its current state and mailbox info
@@ -212,6 +181,37 @@ components:
           type: string
           description: Supervisor status
           example: active
+    SupervisorList:
+      type: object
+      description: Paginated list of supervisors
+      properties:
+        supervisors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Supervisor'
+        total:
+          type: integer
+          description: Total supervisor count
+          example: 12
+        cursor:
+          type: string
+          description: Cursor for next page
+    ActorList:
+      type: object
+      description: Paginated list of actors
+      properties:
+        actors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Actor'
+        total:
+          type: integer
+          description: Total actor count
+          example: 500
+        cursor:
+          type: string
+          description: Cursor for next page
+          example: eyJwYWdlIjoxfQ==
   securitySchemes:
     BearerAuth:
       type: http
