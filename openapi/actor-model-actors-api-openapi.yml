@@ -129,6 +129,28 @@ paths:
           description: Actor not found
 components:
   schemas:
+    SpawnActorRequest:
+      type: object
+      description: Request to spawn a new actor
+      required:
+      - behavior
+      properties:
+        behavior:
+          type: string
+          description: Behavior class or type name
+          example: UserSessionBehavior
+        id:
+          type: string
+          description: Optional custom actor ID (auto-generated if omitted)
+          example: session-abc
+        supervisorId:
+          type: string
+          description: Parent supervisor ID
+          example: session-supervisor
+        initialState:
+          type: object
+          description: Initial state to inject into the actor
+          additionalProperties: true
     Actor:
       type: object
       description: An actor in the system with its current state and mailbox info
@@ -194,28 +216,6 @@ components:
           type: string
           description: Cursor for next page
           example: eyJwYWdlIjoxfQ==
-    SpawnActorRequest:
-      type: object
-      description: Request to spawn a new actor
-      required:
-      - behavior
-      properties:
-        behavior:
-          type: string
-          description: Behavior class or type name
-          example: UserSessionBehavior
-        id:
-          type: string
-          description: Optional custom actor ID (auto-generated if omitted)
-          example: session-abc
-        supervisorId:
-          type: string
-          description: Parent supervisor ID
-          example: session-supervisor
-        initialState:
-          type: object
-          description: Initial state to inject into the actor
-          additionalProperties: true
   securitySchemes:
     BearerAuth:
       type: http
