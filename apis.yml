@@ -133,6 +133,12 @@ apis:
   - type: Examples
     url: examples/
 common:
+  - type: Plans
+    url: plans/actor-model-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/actor-model-rate-limits.yml
+  - type: FinOps
+    url: finops/actor-model-finops.yml
   - type: AgenticAccess
     url: agentic-access/actor-model-agentic-access.yml
   - type: VulnerabilityDisclosure
