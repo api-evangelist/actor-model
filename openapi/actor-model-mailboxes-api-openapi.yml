@@ -76,26 +76,6 @@ paths:
           description: Actor not found
 components:
   schemas:
-    MailboxInspection:
-      type: object
-      description: Inspection of pending messages in an actor's mailbox
-      properties:
-        actorId:
-          type: string
-          description: Actor identifier
-          example: user-123
-        pendingCount:
-          type: integer
-          description: Total pending messages
-          example: 5
-        messages:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActorMessage'
-        oldestMessageAge:
-          type: integer
-          description: Age of oldest message in milliseconds
-          example: 350
     ActorMessage:
       type: object
       description: A message to be placed in an actor's mailbox
@@ -127,6 +107,26 @@ components:
           - low
           description: Message priority in mailbox
           example: normal
+    MailboxInspection:
+      type: object
+      description: Inspection of pending messages in an actor's mailbox
+      properties:
+        actorId:
+          type: string
+          description: Actor identifier
+          example: user-123
+        pendingCount:
+          type: integer
+          description: Total pending messages
+          example: 5
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActorMessage'
+        oldestMessageAge:
+          type: integer
+          description: Age of oldest message in milliseconds
+          example: 350
   securitySchemes:
     BearerAuth:
       type: http

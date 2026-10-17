@@ -60,22 +60,22 @@ paths:
           description: Unauthorized
 components:
   schemas:
-    ShardList:
+    ClusterMemberList:
       type: object
-      description: List of cluster shards
+      description: List of cluster members
       properties:
-        shards:
+        members:
           type: array
           items:
-            $ref: '#/components/schemas/Shard'
-        totalShards:
+            $ref: '#/components/schemas/ClusterMember'
+        leader:
+          type: string
+          description: Current cluster leader node ID
+          example: akka://system@10.0.0.1:2551
+        totalActors:
           type: integer
-          description: Total shard count
-          example: 100
-        totalEntities:
-          type: integer
-          description: Total entities across all shards
-          example: 15000
+          description: Total actors across all cluster members
+          example: 5000
     ClusterMember:
       type: object
       description: A node in the actor system cluster
@@ -114,22 +114,6 @@ components:
           type: integer
           description: Number of actors hosted on this node
           example: 1200
-    ClusterMemberList:
-      type: object
-      description: List of cluster members
-      properties:
-        members:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClusterMember'
-        leader:
-          type: string
-          description: Current cluster leader node ID
-          example: akka://system@10.0.0.1:2551
-        totalActors:
-          type: integer
-          description: Total actors across all cluster members
-          example: 5000
     Shard:
       type: object
       description: A shard partition in the cluster
@@ -154,6 +138,22 @@ components:
           type: string
           description: Shard status
           example: active
+    ShardList:
+      type: object
+      description: List of cluster shards
+      properties:
+        shards:
+          type: array
+          items:
+            $ref: '#/components/schemas/Shard'
+        totalShards:
+          type: integer
+          description: Total shard count
+          example: 100
+        totalEntities:
+          type: integer
+          description: Total entities across all shards
+          example: 15000
   securitySchemes:
     BearerAuth:
       type: http
