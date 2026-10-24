@@ -87,6 +87,12 @@ artifacts:
   front-door-ai/2026-09-17.yml:
     method: unknown
     evidence: no authorship recorded
+  integrations/_index.yml:
+    method: generated
+    evidence: carries an API Evangelist house phrase
+  integrations/actor-model-integration-edges.yml:
+    method: unknown
+    evidence: no authorship recorded
   json-ld/actor-model-context.jsonld:
     method: unknown
     evidence: no authorship recorded
