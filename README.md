@@ -1,4 +1,4 @@
-# actor-model
+# Actor Model
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,9 +64,29 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-## actor-model on APIs.io
+The Actor Model is a mathematical model of concurrent computation where the fundamental unit of computation is an actor, an entity that processes messages asynchronously and maintains its own private state. It provides a powerful abstraction for building highly concurrent and distributed systems, used in frameworks like Akka and languages like Erlang.
 
-Everything profiled for actor-model is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/actor-model/](https://apis.io/providers/actor-model/)** — or go straight to one of the APIs or properties below.
+**Areas:** Actor Model · Concurrency · Distributed Systems
+
+## Actor Model on APIs.io
+
+Everything profiled for Actor Model is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/actor-model/](https://apis.io/providers/actor-model/)** — or go straight to one of the APIs or properties below.
+
+### APIs (5)
+
+- Actor Model Actors API — Actor lifecycle and management
+- Actor Model Cluster API — Cluster membership and sharding
+- Actor Model Health API — System health and diagnostics
+- Actor Model Mailboxes API — Message queue inspection
+- Actor Model Supervisors API — Supervision hierarchy
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://en.wikipedia.org/wiki/Actor_model)
+- [Documentation](https://doc.akka.io/)
+- [GitHub](https://github.com/akka)
 
 ## API Evangelist rating
 
@@ -76,7 +96,7 @@ Not yet rated. See [apis.io/providers/actor-model/](https://apis.io/providers/ac
 
 API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
 
-The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for actor-model: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Actor Model: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
 
 ## Open an issue
 
